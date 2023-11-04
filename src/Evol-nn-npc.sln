@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evol-nn-npc", "Evol-nn-npc.csproj", "{C2EBC0FA-AC10-4EB6-812A-6AB7419A7EA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2EBC0FA-AC10-4EB6-812A-6AB7419A7EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2EBC0FA-AC10-4EB6-812A-6AB7419A7EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2EBC0FA-AC10-4EB6-812A-6AB7419A7EA5}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{C2EBC0FA-AC10-4EB6-812A-6AB7419A7EA5}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{C2EBC0FA-AC10-4EB6-812A-6AB7419A7EA5}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{C2EBC0FA-AC10-4EB6-812A-6AB7419A7EA5}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

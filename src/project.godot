@@ -14,6 +14,6 @@ config/name="Evol-nn-npc"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
-[rendering]
+[dotnet]
 
-renderer/rendering_method="forward_plus"
+project/assembly_name="Evol-nn-npc"

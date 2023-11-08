@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbukliq48khn7"]
+
+[ext_resource type="Script" path="res://Components/CharacterComponent/CharacterComponent.gd" id="1_lxnfs"]
+
+[node name="CharacterComponent" type="CharacterBody2D"]
+script = ExtResource("1_lxnfs")
+
+[node name="DamageCooldownTimer" type="Timer" parent="."]
+wait_time = 0.001
+one_shot = true

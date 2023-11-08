@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7t2t64dke3y8"
-path="res://.godot/imported/terrain1_tileset_32px.png-36e946eadff4ef567fff036e7f585fa4.ctex"
+uid="uid://ca7xl4yudf4ox"
+path="res://.godot/imported/ms_mushroom.png-b399f0ee0490b09d75faaee3efd25969.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://map/terrain1_tileset_32px.png"
-dest_files=["res://.godot/imported/terrain1_tileset_32px.png-36e946eadff4ef567fff036e7f585fa4.ctex"]
+source_file="res://NPCs/Mobs/Mushroom/ms_mushroom.png"
+dest_files=["res://.godot/imported/ms_mushroom.png-b399f0ee0490b09d75faaee3efd25969.ctex"]
 
 [params]
 

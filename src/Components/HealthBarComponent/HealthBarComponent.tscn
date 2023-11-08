@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccahkekd4fg8i"]
+
+[ext_resource type="Script" path="res://Components/HealthBarComponent/HealthBarComponent.gd" id="1_06tjt"]
+
+[node name="HealthBarComponent" type="ProgressBar"]
+modulate = Color(0, 0.811765, 0, 1)
+z_index = 1
+offset_right = 125.0
+offset_bottom = 15.0
+show_percentage = false
+script = ExtResource("1_06tjt")

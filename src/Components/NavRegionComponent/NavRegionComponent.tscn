@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk7bwonav1ixg"]
+
+[ext_resource type="Script" path="res://Components/NavRegionComponent/NavRegionComponent.gd" id="1_5uxsn"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_d4whc"]
+
+[node name="NavRegionComponent" type="NavigationRegion2D"]
+navigation_polygon = SubResource("NavigationPolygon_d4whc")
+script = ExtResource("1_5uxsn")

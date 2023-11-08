@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxseni6c4ayyl"]
+
+[ext_resource type="Script" path="res://NPCs/Mobs/Mob.gd" id="1_pxl1g"]
+[ext_resource type="PackedScene" uid="uid://dsrdf8t06wg78" path="res://NPCs/Character.tscn" id="1_t1vy0"]
+[ext_resource type="Shape2D" uid="uid://fg4vtcf4j5tb" path="res://NPCs/Mobs/DetectionShape.tres" id="2_7w2h5"]
+
+[node name="Mob" instance=ExtResource("1_t1vy0")]
+z_index = 4
+z_as_relative = false
+collision_layer = 4
+script = ExtResource("1_pxl1g")
+detection_radius = 750.0
+
+[node name="DetectionArea" type="Area2D" parent="." index="4"]
+collision_layer = 4
+collision_mask = 2
+
+[node name="DetectionShape" type="CollisionShape2D" parent="DetectionArea" index="0"]
+shape = ExtResource("2_7w2h5")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="6"]
+path_desired_distance = 72.0
+target_desired_distance = 16.0
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 1, 1)
+debug_path_custom_point_size = 8.3
+debug_path_custom_line_width = 5.03
+
+[node name="NavigationCooldownTimer" type="Timer" parent="." index="7"]
+
+[node name="JumpCooldownTimer" type="Timer" parent="." index="8"]
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="timeout" from="NavigationCooldownTimer" to="." method="_on_navigation_cooldown_timer_timeout"]
+[connection signal="timeout" from="JumpCooldownTimer" to="." method="_on_jump_cooldown_timer_timeout"]

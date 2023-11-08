@@ -8,3 +8,6 @@ collision_mask = 0
 script = ExtResource("1_bt0oi")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_hit_box_body_exited"]

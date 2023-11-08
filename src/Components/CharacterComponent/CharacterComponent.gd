@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var healthbar_component : HealthBarComponent
 @export var collision_component : CollisionComponent
 @export var sprite_component : SpriteComponent
+@export var damage_component : DamageProcess
 
 # CHARACTER STATE VARS -------------------------- #
 @export var health: float = 100.0
@@ -44,6 +45,11 @@ func _ready():
 	# reset invincibility state
 	# $DamageCooldownTimer.start(self.damage_cooldown) ?
 	self.invincible = false
+
+func _physics_process(delta):
+	# callback processes
+	var dmg = self.damage_component.process_damage()
+	self.take_damage(dmg)
 
 func move(input: Dictionary, delta: float) -> void:
 	# calculate horizontal velocity

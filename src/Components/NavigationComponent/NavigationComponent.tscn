@@ -6,3 +6,5 @@
 script = ExtResource("1_wkomq")
 
 [node name="CooldownTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

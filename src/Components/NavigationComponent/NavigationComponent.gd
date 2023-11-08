@@ -18,3 +18,6 @@ func finished() -> bool:
 
 func next() -> Vector2:
 	return self.get_next_path_position()
+
+func _on_cooldown_timer_timeout():
+	self.freeze = false

@@ -1,8 +1,8 @@
 extends ProgressBar
+class_name HealthBarComponent
 
 @export var force_visibility : bool = false
-
-@onready var collision_capsule : CollisionShape2D = get_node("../CollisionShape")
+@export var collision_component : CollisionShape2D
 
 func _ready():
 	"""

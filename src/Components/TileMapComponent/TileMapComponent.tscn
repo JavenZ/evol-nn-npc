@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://2xiu2fvg17wy" path="res://Map/Terrain1_32px_Tileset.tres" id="1_n54w3"]
 [ext_resource type="Script" path="res://Components/TileMapComponent/TileMapComponent.gd" id="2_qlvhe"]
 
-[node name="TileMapComponent" type="TileMap"]
+[node name="TileMapComponent" type="TileMap" groups=["TileMap"]]
 position = Vector2(71, 49)
 tile_set = ExtResource("1_n54w3")
 navigation_visibility_mode = 1

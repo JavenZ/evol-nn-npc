@@ -13,6 +13,7 @@
 [node name="Player" type="Node2D"]
 
 [node name="CharacterComponent" parent="." node_paths=PackedStringArray("healthbar_component", "collision_component", "sprite_component", "damage_component", "movement_component") instance=ExtResource("1_78jbi")]
+collision_layer = 4
 healthbar_component = NodePath("HealthBarComponent")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
@@ -23,6 +24,8 @@ movement_component = NodePath("PlayerMovementComponent")
 collision_component = NodePath("../CollisionComponent")
 
 [node name="HitBoxComponent" parent="CharacterComponent" instance=ExtResource("3_no6jf")]
+collision_layer = 4
+collision_mask = 2
 shape = ExtResource("4_qu1kl")
 
 [node name="SpriteComponent" parent="CharacterComponent" instance=ExtResource("5_qjlpu")]

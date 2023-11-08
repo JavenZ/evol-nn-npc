@@ -2,7 +2,7 @@ extends Area2D
 class_name DetectionComponent
 
 @export var radius : float = 750.0
-var body_detected : Node2D
+@export var body_detected : Node2D
 
 func _ready():
 	# update detection shape radius
@@ -11,6 +11,7 @@ func _ready():
 
 func _on_detection_area_body_entered(_body):
 	# uses collision layer to detect
+	print("player detected!")
 	self.body_detected = _body
 
 func _on_detection_area_body_exited(_body):

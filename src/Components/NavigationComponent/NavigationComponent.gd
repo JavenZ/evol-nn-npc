@@ -6,7 +6,7 @@ class_name NavigationComponent
 func update_target(target: Vector2, cooldown: float = 0.0):
 	if !self.freeze:
 		# update target navigation positional vector
-		self.target_position = self.target
+		self.target_position = target
 		
 		# cooldown?
 		if cooldown > 0.0:

@@ -3,11 +3,13 @@ class_name MobMovementComponent
 
 @export var nav_component : NavigationComponent
 @export var detection_component : DetectionComponent
-@export var tilemap_component : TileMapComponent
 @export var character_component : CharacterComponent
 @export var jump_threshold : float = -16.0
 @export var turn_threshold : float = 5.0
+
+@onready var tilemap_component = get_tree().get_first_node_in_group('TileMap') as TileMapComponent
 var jump_freeze : bool = false
+
 
 func process_movement() -> Dictionary:
 	"""
@@ -19,9 +21,9 @@ func process_movement() -> Dictionary:
 	var just_jump : bool = false
 	
 	# update navigation target
-	var body_detected = self.detection_component.body_detected
-	if body_detected:
-		self.nav_component.update_target(body_detected.position, Util.rand_float(0.5, 1.0))
+	var body = self.detection_component.body_detected
+	if body:
+		self.nav_component.update_target(body.global_position, Util.rand_float(0.5, 1.0))
 	else:
 		self.nav_component.update_target(self.tilemap_component.get_random_tile(1), Util.rand_float(1.5, 3.5))
 	

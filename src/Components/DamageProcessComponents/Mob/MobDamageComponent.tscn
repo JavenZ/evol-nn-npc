@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnogbsyr1k6xs"]
+
+[ext_resource type="Script" path="res://Components/DamageProcessComponents/Mob/MobDamageComponent.gd" id="1_q1qql"]
+
+[node name="MobDamageComponent" type="Node"]
+script = ExtResource("1_q1qql")

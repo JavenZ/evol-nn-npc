@@ -1,0 +1,51 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://b5lvckvcsikd4"]
+
+[ext_resource type="Texture2D" uid="uid://ca7xl4yudf4ox" path="res://NPCS/Mushroom/ms_mushroom.png" id="1_688sh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_841hj"]
+atlas = ExtResource("1_688sh")
+region = Rect2(3, 70, 67, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ws2h"]
+atlas = ExtResource("1_688sh")
+region = Rect2(70, 70, 67, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mt1ix"]
+atlas = ExtResource("1_688sh")
+region = Rect2(137, 70, 67, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2v1p"]
+atlas = ExtResource("1_688sh")
+region = Rect2(4, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8243"]
+atlas = ExtResource("1_688sh")
+region = Rect2(70, 0, 66, 66)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_841hj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ws2h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mt1ix")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2v1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8243")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 4.0
+}]

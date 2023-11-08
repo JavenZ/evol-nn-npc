@@ -1,0 +1,84 @@
+[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://deb4mg53bdmg1"]
+
+[ext_resource type="Texture2D" uid="uid://b1rs3swjbqyfr" path="res://Player/Sprite/Sprite-0004.png" id="1_o43gy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jb57o"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w45hb"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l55c7"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(256, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7vc0"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvcbi"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebaoo"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caov1"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ne22j"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0tb7"]
+atlas = ExtResource("1_o43gy")
+region = Rect2(256, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jb57o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w45hb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l55c7")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o7vc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvcbi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebaoo")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caov1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ne22j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0tb7")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]

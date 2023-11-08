@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://chp3gw8xnv336"]
+
+[ext_resource type="Shape2D" uid="uid://fg4vtcf4j5tb" path="res://Components/DetectionComponent/DetectionShape.tres" id="1_5j4an"]
+[ext_resource type="Script" path="res://Components/DetectionComponent/DetectionComponent.gd" id="1_38b1q"]
+
+[node name="DetectionComponent" type="Area2D"]
+script = ExtResource("1_38b1q")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = ExtResource("1_5j4an")

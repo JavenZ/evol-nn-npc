@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://bwo042el4r6jc"]
 
-[ext_resource type="Texture2D" uid="uid://d1gm0yy4peth1" path="res://NPCs/Player/Sprite/icon.svg" id="1_fwxqh"]
+[ext_resource type="Texture2D" uid="uid://d1gm0yy4peth1" path="res://Player/Sprite/icon.svg" id="1_fwxqh"]
 
 [resource]
 animations = [{

@@ -1,14 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxseni6c4ayyl"]
+[gd_scene load_steps=3 format=3 uid="uid://bxseni6c4ayyl"]
 
-[ext_resource type="Script" path="res://NPCs/Mobs/Mob.gd" id="1_pxl1g"]
-[ext_resource type="PackedScene" uid="uid://dsrdf8t06wg78" path="res://NPCs/Character.tscn" id="1_t1vy0"]
-[ext_resource type="Shape2D" uid="uid://fg4vtcf4j5tb" path="res://NPCs/Mobs/DetectionShape.tres" id="2_7w2h5"]
+[ext_resource type="Script" path="res://NPCs_OLD/Mobs/Mob.gd" id="1_ctq6q"]
+[ext_resource type="Shape2D" uid="uid://fg4vtcf4j5tb" path="res://Components/DetectionComponent/DetectionShape.tres" id="2_4jmw1"]
 
-[node name="Mob" instance=ExtResource("1_t1vy0")]
+[node name="Mob"]
 z_index = 4
 z_as_relative = false
 collision_layer = 4
-script = ExtResource("1_pxl1g")
+script = ExtResource("1_ctq6q")
 detection_radius = 750.0
 
 [node name="DetectionArea" type="Area2D" parent="." index="4"]
@@ -16,7 +15,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="DetectionShape" type="CollisionShape2D" parent="DetectionArea" index="0"]
-shape = ExtResource("2_7w2h5")
+shape = ExtResource("2_4jmw1")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="6"]

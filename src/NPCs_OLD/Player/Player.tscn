@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dalamwqddmgnx"]
 
-[ext_resource type="Script" path="res://NPCs/Player/Player.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://dsrdf8t06wg78" path="res://NPCs/Character.tscn" id="1_l4pxb"]
-[ext_resource type="Shape2D" uid="uid://cj5ndkg7ptm25" path="res://NPCs/Player/CapsuleShape.tres" id="3_oah1v"]
-[ext_resource type="SpriteFrames" uid="uid://bwo042el4r6jc" path="res://NPCs/Player/Sprite/TestSpriteFrames.tres" id="4_gf2ms"]
+[ext_resource type="Script" path="res://NPCs_OLD/Player/Player.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dsrdf8t06wg78" path="res://NPCs_OLD/Character.tscn" id="1_l4pxb"]
+[ext_resource type="Shape2D" uid="uid://cj5ndkg7ptm25" path="res://NPCs_OLD/Player/CapsuleShape.tres" id="3_oah1v"]
+[ext_resource type="SpriteFrames" uid="uid://bwo042el4r6jc" path="res://NPCs_OLD/Player/Sprite/TestSpriteFrames.tres" id="4_gf2ms"]
 
 [node name="Player" instance=ExtResource("1_l4pxb")]
 z_index = 3

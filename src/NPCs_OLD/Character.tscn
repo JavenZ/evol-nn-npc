@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsrdf8t06wg78"]
 
-[ext_resource type="Script" path="res://NPCs/Character-old.gd" id="1_330i3"]
+[ext_resource type="Script" path="res://NPCs_OLD/Character-old.gd" id="1_330i3"]
 [ext_resource type="PackedScene" uid="uid://ccahkekd4fg8i" path="res://Components/HealthBarComponent/HealthBarComponent.tscn" id="2_jj0to"]
 
 [node name="Character" type="CharacterBody2D"]

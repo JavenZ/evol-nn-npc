@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var collision_component : CollisionComponent
 @export var sprite_component : SpriteComponent
 @export var damage_component : DamageProcess
+@export var movement_component : MovementProcess
 
 # CHARACTER STATE VARS -------------------------- #
 @export var health: float = 100.0
@@ -50,6 +51,8 @@ func _physics_process(delta):
 	# callback processes
 	var dmg = self.damage_component.process_damage()
 	self.take_damage(dmg)
+	var mv = self.movement_component.process_movement()
+	self.move(mv, delta)
 
 func move(input: Dictionary, delta: float) -> void:
 	# calculate horizontal velocity

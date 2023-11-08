@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # NODE REFERENCES
-@export var health_component : HealthBarComponent
+@export var healthbar_component : HealthBarComponent
 @export var collision_component : CollisionComponent
 @export var sprite_component : SpriteComponent
 
@@ -145,7 +145,7 @@ func update_movement_timers(delta: float) -> void:
 	jump_buffer_timer -= delta
 
 func update_health_bar() -> void:
-	self.health_component.update(self.max_health, self.health)
+	self.healthbar_component.update(self.max_health, self.health)
 
 func take_damage(amount: float) -> void:
 	"""

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name CharacterComponent
 
 # NODE REFERENCES
 @export var healthbar_component : HealthBarComponent

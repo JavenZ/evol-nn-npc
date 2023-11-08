@@ -1,4 +1,5 @@
 extends Area2D
+class_name DetectionComponent
 
 @export var radius : float = 750.0
 var body_detected : Node2D

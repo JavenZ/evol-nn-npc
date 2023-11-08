@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 # NODE REFERENCES
 @export var health_component : HealthBarComponent
-@export var collision_component : CollisionShape2D
+@export var collision_component : CollisionComponent
 @export var sprite_component : Sprite2D
 
 # CHARACTER STATE VARS -------------------------- #

@@ -14,7 +14,7 @@
 [node name="Human_Sword" type="Node2D" groups=["Humans"]]
 
 [node name="CharacterComponent" parent="." node_paths=PackedStringArray("healthbar_component", "collision_component", "sprite_component") instance=ExtResource("1_4saij")]
-collision_layer = 0
+collision_layer = 4
 healthbar_component = NodePath("HealthBarComponent")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
@@ -36,14 +36,15 @@ collision_component = NodePath("../CollisionComponent")
 
 [node name="NavigationComponent" parent="CharacterComponent" instance=ExtResource("9_w1la1")]
 debug_enabled = true
-debug_path_custom_color = Color(1, 0, 0, 1)
+debug_use_custom = true
+debug_path_custom_color = Color(0.211765, 0.537255, 0.913725, 1)
 debug_path_custom_point_size = 8.0
-debug_path_custom_line_width = 2.0
+debug_path_custom_line_width = 4.0
 
 [node name="DetectionComponent" parent="CharacterComponent" instance=ExtResource("10_7lk4i")]
 visible = false
 collision_layer = 0
-collision_mask = 6
+collision_mask = 0
 
 [node name="MobBrainComponent" parent="CharacterComponent" node_paths=PackedStringArray("nav_component", "detection_component", "character_component") instance=ExtResource("8_qhsgf")]
 nav_component = NodePath("../NavigationComponent")
@@ -51,6 +52,7 @@ detection_component = NodePath("../DetectionComponent")
 character_component = NodePath("..")
 
 [node name="HumanHitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("character_component") instance=ExtResource("10_11kjr")]
+collision_layer = 16
 collision_mask = 2
 shape = ExtResource("5_qb754")
 character_component = NodePath("..")

@@ -10,7 +10,7 @@
 [ext_resource type="SpriteFrames" uid="uid://b5lvckvcsikd4" path="res://NPCs/Mushroom/SpriteFrames.tres" id="9_x0pon"]
 [ext_resource type="PackedScene" uid="uid://ewr87m8f2mdf" path="res://Components/BrainComponent/Mob/MobBrainComponent.tscn" id="11_0ofxp"]
 
-[node name="Mushroom" type="Node2D"]
+[node name="Mushroom" type="Node2D" groups=["Mobs"]]
 
 [node name="CharacterComponent" parent="." node_paths=PackedStringArray("healthbar_component", "collision_component", "sprite_component") instance=ExtResource("1_yx27q")]
 collision_layer = 2
@@ -24,13 +24,17 @@ shape = ExtResource("3_5s01f")
 
 [node name="DetectionComponent" parent="CharacterComponent" instance=ExtResource("4_s3t4x")]
 collision_layer = 0
-collision_mask = 6
+collision_mask = 4
 
 [node name="HealthBarComponent" parent="CharacterComponent" node_paths=PackedStringArray("collision_component") instance=ExtResource("5_4qu0l")]
 collision_component = NodePath("../CollisionComponent")
 
 [node name="NavigationComponent" parent="CharacterComponent" instance=ExtResource("7_f4vkf")]
 debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.72549, 0.470588, 0, 1)
+debug_path_custom_point_size = 8.0
+debug_path_custom_line_width = 4.0
 
 [node name="SpriteComponent" parent="CharacterComponent" instance=ExtResource("8_2j4hs")]
 scale = Vector2(1.5, 1.5)

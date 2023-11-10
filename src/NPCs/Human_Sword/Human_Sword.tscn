@@ -23,6 +23,7 @@ damage_component = NodePath("HumanDamageComponent")
 movement_component = NodePath("MobMovementComponent")
 
 [node name="SpriteComponent" parent="CharacterComponent" instance=ExtResource("2_xdjx3")]
+scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("3_kupis")
 animation = &"idle"
 current_direction = -1
@@ -30,6 +31,7 @@ spawn_direction = -1
 
 [node name="CollisionComponent" parent="CharacterComponent" instance=ExtResource("4_70xpj")]
 position = Vector2(1, 0)
+scale = Vector2(1.01988, 1.44)
 shape = ExtResource("5_qb754")
 
 [node name="HumanDamageComponent" parent="CharacterComponent" node_paths=PackedStringArray("hitbox_component") instance=ExtResource("6_xfgh6")]

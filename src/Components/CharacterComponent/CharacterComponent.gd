@@ -38,6 +38,9 @@ var jump_buffer_timer : float = 0
 
 
 func _ready():
+	# update name
+	set_name.call_deferred(get_parent().name)
+	
 	# add character to groups
 	add_to_group("Characters")
 	

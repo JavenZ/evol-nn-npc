@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://6m0eceqysk2m"]
 
 [ext_resource type="PackedScene" uid="uid://bvc2k8mnhjl6f" path="res://Components/TileMapComponent/TileMapComponent.tscn" id="1_tl5b4"]
-[ext_resource type="PackedScene" uid="uid://rvj3hqxmrk1u" path="res://NPCS/Human1/Human1.tscn" id="3_cda5h"]
+[ext_resource type="PackedScene" uid="uid://rvj3hqxmrk1u" path="res://NPCs/Human_Sword/Human_Sword.tscn" id="3_cda5h"]
 
 [node name="map" type="Node2D"]
 

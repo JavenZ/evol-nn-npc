@@ -1,38 +1,28 @@
 [gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://b5lvckvcsikd4"]
 
-[ext_resource type="Texture2D" uid="uid://ca7xl4yudf4ox" path="res://NPCs/Mushroom/ms_mushroom.png" id="1_688sh"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_841hj"]
-atlas = ExtResource("1_688sh")
-region = Rect2(3, 70, 67, 67)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ws2h"]
-atlas = ExtResource("1_688sh")
-region = Rect2(70, 70, 67, 67)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mt1ix"]
-atlas = ExtResource("1_688sh")
-region = Rect2(137, 70, 67, 67)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g2v1p"]
-atlas = ExtResource("1_688sh")
-region = Rect2(4, 0, 66, 66)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c8243"]
-atlas = ExtResource("1_688sh")
-region = Rect2(70, 0, 66, 66)
+[ext_resource type="Texture2D" uid="uid://ciehhbn0e20bu" path="res://NPCs/Mushroom/Sprite/stand_0.png" id="1_st0qr"]
+[ext_resource type="Texture2D" uid="uid://bjbpoj6361fwo" path="res://NPCs/Mushroom/Sprite/stand_1.png" id="2_ublmd"]
+[ext_resource type="Texture2D" uid="uid://cxsqn1sgan6dr" path="res://NPCs/Mushroom/Sprite/jump_0.png" id="3_5tx34"]
+[ext_resource type="Texture2D" uid="uid://bffs3tohayk3v" path="res://NPCs/Mushroom/Sprite/move_0.png" id="4_euxrq"]
+[ext_resource type="Texture2D" uid="uid://2238k3anmrst" path="res://NPCs/Mushroom/Sprite/move_1.png" id="5_5wq14"]
+[ext_resource type="Texture2D" uid="uid://dysuci660oj1s" path="res://NPCs/Mushroom/Sprite/move_2.png" id="6_plwhx"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_841hj")
+"texture": ExtResource("1_st0qr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4ws2h")
+"texture": ExtResource("2_ublmd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
 }, {
+"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mt1ix")
+"texture": ExtResource("3_5tx34")
 }],
 "loop": true,
 "name": &"jump",
@@ -40,10 +30,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g2v1p")
+"texture": ExtResource("4_euxrq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c8243")
+"texture": ExtResource("5_5wq14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_plwhx")
 }],
 "loop": true,
 "name": &"walk",

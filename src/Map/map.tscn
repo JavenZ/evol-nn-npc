@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://6m0eceqysk2m"]
+[gd_scene load_steps=4 format=3 uid="uid://6m0eceqysk2m"]
 
 [ext_resource type="PackedScene" uid="uid://bvc2k8mnhjl6f" path="res://Components/TileMapComponent/TileMapComponent.tscn" id="1_tl5b4"]
 [ext_resource type="PackedScene" uid="uid://rvj3hqxmrk1u" path="res://NPCs/Human_Sword/Human_Sword.tscn" id="3_cda5h"]
+[ext_resource type="PackedScene" uid="uid://bs2qlxq4bwuon" path="res://NPCs/Mushroom/Mushroom.tscn" id="3_nwoc8"]
 
 [node name="map" type="Node2D"]
 
@@ -15,3 +16,9 @@ position = Vector2(158, 411)
 
 [node name="Human3" parent="TileMapComponent" instance=ExtResource("3_cda5h")]
 position = Vector2(485, 421)
+
+[node name="Mushroom" parent="TileMapComponent" instance=ExtResource("3_nwoc8")]
+position = Vector2(305, 423)
+
+[node name="Mushroom2" parent="TileMapComponent" instance=ExtResource("3_nwoc8")]
+position = Vector2(723, 436)

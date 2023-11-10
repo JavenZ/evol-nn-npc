@@ -51,5 +51,6 @@ detection_component = NodePath("../DetectionComponent")
 character_component = NodePath("..")
 
 [node name="HumanHitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("character_component") instance=ExtResource("10_11kjr")]
+collision_mask = 2
 shape = ExtResource("5_qb754")
 character_component = NodePath("..")

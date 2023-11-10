@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://ewr87m8f2mdf"]
 
-[ext_resource type="Script" path="res://Components/MovementProcessComponents/Mob/MobMovementComponent.gd" id="1_tm734"]
+[ext_resource type="Script" path="res://Components/BrainComponent/Mob/MobBrainComponent.gd" id="1_s3v2k"]
 
-[node name="MobMovementComponent" type="Node"]
-script = ExtResource("1_tm734")
+[node name="MobBrainComponent" type="Node"]
+script = ExtResource("1_s3v2k")
 
 [node name="JumpCooldownTimer" type="Timer" parent="."]
 

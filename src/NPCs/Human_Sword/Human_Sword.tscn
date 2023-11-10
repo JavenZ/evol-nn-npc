@@ -1,26 +1,23 @@
-[gd_scene load_steps=12 format=3 uid="uid://rvj3hqxmrk1u"]
+[gd_scene load_steps=11 format=3 uid="uid://rvj3hqxmrk1u"]
 
 [ext_resource type="PackedScene" uid="uid://bbukliq48khn7" path="res://Components/CharacterComponent/CharacterComponent.tscn" id="1_4saij"]
 [ext_resource type="PackedScene" uid="uid://dw4x6yvynbewu" path="res://Components/SpriteComponent/SpriteComponent.tscn" id="2_xdjx3"]
 [ext_resource type="SpriteFrames" uid="uid://c1jvxdugbv6cy" path="res://NPCs/Human_Sword/SpriteFrames.tres" id="3_kupis"]
 [ext_resource type="PackedScene" uid="uid://npmqb1xw41mh" path="res://Components/CollisionComponent/CollisionComponent.tscn" id="4_70xpj"]
 [ext_resource type="Shape2D" uid="uid://30qdo75kjsp0" path="res://NPCs/Human_Sword/CollisionShape.tres" id="5_qb754"]
-[ext_resource type="PackedScene" uid="uid://cxmbqrh8rfxc4" path="res://Components/DamageProcessComponents/HumanDamageComponent/HumanDamageComponent.tscn" id="6_xfgh6"]
 [ext_resource type="PackedScene" uid="uid://ccahkekd4fg8i" path="res://Components/HealthBarComponent/HealthBarComponent.tscn" id="7_v53ad"]
-[ext_resource type="PackedScene" uid="uid://ewr87m8f2mdf" path="res://Components/MovementProcessComponents/Mob/MobMovementComponent.tscn" id="8_qhsgf"]
+[ext_resource type="PackedScene" uid="uid://ewr87m8f2mdf" path="res://Components/BrainComponent/Mob/MobBrainComponent.tscn" id="8_qhsgf"]
 [ext_resource type="PackedScene" uid="uid://b7wydua5u4l3w" path="res://Components/NavigationComponent/NavigationComponent.tscn" id="9_w1la1"]
 [ext_resource type="PackedScene" uid="uid://chp3gw8xnv336" path="res://Components/DetectionComponent/DetectionComponent.tscn" id="10_7lk4i"]
-[ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/HitBoxComponent.tscn" id="11_jcbnq"]
+[ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/Human/HumanHitBoxComponent.tscn" id="10_11kjr"]
 
-[node name="Human_Sword" type="Node2D"]
+[node name="Human_Sword" type="Node2D" groups=["Humans"]]
 
-[node name="CharacterComponent" parent="." node_paths=PackedStringArray("healthbar_component", "collision_component", "sprite_component", "damage_component", "movement_component") instance=ExtResource("1_4saij")]
-collision_layer = 2
+[node name="CharacterComponent" parent="." node_paths=PackedStringArray("healthbar_component", "collision_component", "sprite_component") instance=ExtResource("1_4saij")]
+collision_layer = 0
 healthbar_component = NodePath("HealthBarComponent")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
-damage_component = NodePath("HumanDamageComponent")
-movement_component = NodePath("MobMovementComponent")
 
 [node name="SpriteComponent" parent="CharacterComponent" instance=ExtResource("2_xdjx3")]
 scale = Vector2(1.5, 1.5)
@@ -34,25 +31,25 @@ position = Vector2(1, 0)
 scale = Vector2(1.01988, 1.44)
 shape = ExtResource("5_qb754")
 
-[node name="HumanDamageComponent" parent="CharacterComponent" node_paths=PackedStringArray("hitbox_component") instance=ExtResource("6_xfgh6")]
-hitbox_component = NodePath("../HitBoxComponent")
-
 [node name="HealthBarComponent" parent="CharacterComponent" node_paths=PackedStringArray("collision_component") instance=ExtResource("7_v53ad")]
 collision_component = NodePath("../CollisionComponent")
 
-[node name="MobMovementComponent" parent="CharacterComponent" node_paths=PackedStringArray("nav_component", "detection_component", "character_component") instance=ExtResource("8_qhsgf")]
+[node name="NavigationComponent" parent="CharacterComponent" instance=ExtResource("9_w1la1")]
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 0, 1)
+debug_path_custom_point_size = 8.0
+debug_path_custom_line_width = 2.0
+
+[node name="DetectionComponent" parent="CharacterComponent" instance=ExtResource("10_7lk4i")]
+visible = false
+collision_layer = 0
+collision_mask = 6
+
+[node name="MobBrainComponent" parent="CharacterComponent" node_paths=PackedStringArray("nav_component", "detection_component", "character_component") instance=ExtResource("8_qhsgf")]
 nav_component = NodePath("../NavigationComponent")
 detection_component = NodePath("../DetectionComponent")
 character_component = NodePath("..")
 
-[node name="NavigationComponent" parent="CharacterComponent" instance=ExtResource("9_w1la1")]
-
-[node name="DetectionComponent" parent="CharacterComponent" instance=ExtResource("10_7lk4i")]
-visible = false
-collision_layer = 2
-collision_mask = 6
-
-[node name="HitBoxComponent" parent="CharacterComponent" instance=ExtResource("11_jcbnq")]
-collision_layer = 2
-collision_mask = 4
+[node name="HumanHitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("character_component") instance=ExtResource("10_11kjr")]
 shape = ExtResource("5_qb754")
+character_component = NodePath("..")

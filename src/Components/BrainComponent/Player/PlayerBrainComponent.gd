@@ -1,5 +1,10 @@
-extends "res://Components/MovementProcessComponents/MovementProcess.gd"
-class_name PlayerMovementComponent
+extends Node
+class_name PlayerBrainComponent
+
+@export var character_component : CharacterComponent
+
+func _physics_process(delta):
+	self.character_component.move(self.process_movement(), delta)
 
 func process_movement() -> Dictionary:
 	"""

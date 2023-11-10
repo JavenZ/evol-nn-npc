@@ -1,5 +1,5 @@
-extends "res://Components/MovementProcessComponents/MovementProcess.gd"
-class_name MobMovementComponent
+extends Node
+class_name MobBrainComponent
 
 @export var nav_component : NavigationComponent
 @export var detection_component : DetectionComponent
@@ -10,6 +10,8 @@ class_name MobMovementComponent
 @onready var tilemap_component = get_tree().get_first_node_in_group('TileMap') as TileMapComponent
 var jump_freeze : bool = false
 
+func _physics_process(delta):
+	self.character_component.move(self.process_movement(), delta)
 
 func process_movement() -> Dictionary:
 	"""

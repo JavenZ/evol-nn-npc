@@ -2,12 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://bbukliq48khn7" path="res://Components/CharacterComponent/CharacterComponent.tscn" id="1_78jbi"]
 [ext_resource type="PackedScene" uid="uid://ccahkekd4fg8i" path="res://Components/HealthBarComponent/HealthBarComponent.tscn" id="2_m7ovc"]
-[ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/HitBoxComponent.tscn" id="3_no6jf"]
+[ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/Human/HitBoxComponent.tscn" id="3_no6jf"]
 [ext_resource type="Shape2D" uid="uid://cj5ndkg7ptm25" path="res://Player/CapsuleShape.tres" id="4_qu1kl"]
 [ext_resource type="PackedScene" uid="uid://dw4x6yvynbewu" path="res://Components/SpriteComponent/SpriteComponent.tscn" id="5_qjlpu"]
 [ext_resource type="SpriteFrames" uid="uid://bwo042el4r6jc" path="res://Player/Sprite/TestSpriteFrames.tres" id="6_qsd5u"]
 [ext_resource type="PackedScene" uid="uid://xlkxqsx3tmkh" path="res://Components/MovementProcessComponents/Player/PlayerMovementComponent.tscn" id="7_l1mtj"]
-[ext_resource type="PackedScene" uid="uid://cxmbqrh8rfxc4" path="res://Components/DamageProcessComponents/HumanDamageComponent/HumanDamageComponent.tscn" id="8_q36um"]
+[ext_resource type="PackedScene" uid="uid://cxmbqrh8rfxc4" path="res://Components/HitboxComponents/HumanDamageComponent/HumanDamageComponent.tscn" id="8_q36um"]
 [ext_resource type="PackedScene" uid="uid://npmqb1xw41mh" path="res://Components/CollisionComponent/CollisionComponent.tscn" id="9_5n5fi"]
 
 [node name="Player" type="Node2D"]

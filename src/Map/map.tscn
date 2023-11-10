@@ -1,15 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://6m0eceqysk2m"]
+[gd_scene load_steps=3 format=3 uid="uid://6m0eceqysk2m"]
 
 [ext_resource type="PackedScene" uid="uid://bvc2k8mnhjl6f" path="res://Components/TileMapComponent/TileMapComponent.tscn" id="1_tl5b4"]
-[ext_resource type="PackedScene" uid="uid://c0kd7ks3k1dlp" path="res://Player/Player.tscn" id="2_ho1tx"]
-[ext_resource type="PackedScene" uid="uid://bs2qlxq4bwuon" path="res://NPCS/Mushroom/Mushroom.tscn" id="3_12s3l"]
+[ext_resource type="PackedScene" uid="uid://rvj3hqxmrk1u" path="res://NPCS/Human1/Human1.tscn" id="3_cda5h"]
 
 [node name="map" type="Node2D"]
 
 [node name="TileMapComponent" parent="." instance=ExtResource("1_tl5b4")]
 
-[node name="Player" parent="TileMapComponent" instance=ExtResource("2_ho1tx")]
-position = Vector2(275, 373)
+[node name="Human1" parent="TileMapComponent" instance=ExtResource("3_cda5h")]
+position = Vector2(860, 430)
 
-[node name="Mushroom" parent="TileMapComponent" instance=ExtResource("3_12s3l")]
-position = Vector2(775, 371)
+[node name="Human2" parent="TileMapComponent" instance=ExtResource("3_cda5h")]
+position = Vector2(158, 411)
+
+[node name="Human3" parent="TileMapComponent" instance=ExtResource("3_cda5h")]
+position = Vector2(485, 421)

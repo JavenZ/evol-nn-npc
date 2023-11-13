@@ -49,7 +49,9 @@ jump={
 
 [layer_names]
 
-2d_physics/layer_1="walls"
-2d_physics/layer_2="mobs"
-2d_physics/layer_3="player"
-2d_physics/layer_4="detection"
+2d_physics/layer_1="wall_collision"
+2d_physics/layer_2="mob_collision"
+2d_physics/layer_3="human_collision"
+2d_physics/layer_4="mob_hitbox"
+2d_physics/layer_5="human_hitbox"
+2d_physics/layer_6="human_attack"

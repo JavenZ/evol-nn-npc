@@ -1,0 +1,71 @@
+[gd_scene load_steps=12 format=3 uid="uid://rvj3hqxmrk1u"]
+
+[ext_resource type="PackedScene" uid="uid://bbukliq48khn7" path="res://Components/CharacterComponent/CharacterComponent.tscn" id="1_4saij"]
+[ext_resource type="PackedScene" uid="uid://dw4x6yvynbewu" path="res://Components/SpriteComponent/SpriteComponent.tscn" id="2_xdjx3"]
+[ext_resource type="SpriteFrames" uid="uid://c1jvxdugbv6cy" path="res://NPCs/Human_Sword/SpriteFrames.tres" id="3_kupis"]
+[ext_resource type="PackedScene" uid="uid://npmqb1xw41mh" path="res://Components/CollisionComponent/CollisionComponent.tscn" id="4_70xpj"]
+[ext_resource type="Shape2D" uid="uid://30qdo75kjsp0" path="res://NPCs/Human_Sword/CollisionShape.tres" id="5_qb754"]
+[ext_resource type="PackedScene" uid="uid://ccahkekd4fg8i" path="res://Components/HealthBarComponent/HealthBarComponent.tscn" id="7_v53ad"]
+[ext_resource type="PackedScene" uid="uid://ewr87m8f2mdf" path="res://Components/BrainComponent/Mob/MobBrainComponent.tscn" id="8_qhsgf"]
+[ext_resource type="PackedScene" uid="uid://b7wydua5u4l3w" path="res://Components/NavigationComponent/NavigationComponent.tscn" id="9_w1la1"]
+[ext_resource type="PackedScene" uid="uid://chp3gw8xnv336" path="res://Components/DetectionComponent/DetectionComponent.tscn" id="10_7lk4i"]
+[ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/Human/HumanHitBoxComponent.tscn" id="10_11kjr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c5uvh"]
+radius = 3.29353
+height = 56.1294
+
+[node name="Human_Sword" type="Node2D" groups=["Humans"]]
+
+[node name="CharacterComponent" parent="." node_paths=PackedStringArray("healthbar_component", "collision_component", "sprite_component") instance=ExtResource("1_4saij")]
+collision_layer = 4
+healthbar_component = NodePath("HealthBarComponent")
+collision_component = NodePath("CollisionComponent")
+sprite_component = NodePath("SpriteComponent")
+
+[node name="SpriteComponent" parent="CharacterComponent" instance=ExtResource("2_xdjx3")]
+scale = Vector2(1.5, 1.5)
+sprite_frames = ExtResource("3_kupis")
+animation = &"idle"
+current_direction = -1
+spawn_direction = -1
+
+[node name="CollisionComponent" parent="CharacterComponent" instance=ExtResource("4_70xpj")]
+position = Vector2(1, 0)
+scale = Vector2(1.01988, 1.44)
+shape = ExtResource("5_qb754")
+
+[node name="HealthBarComponent" parent="CharacterComponent" node_paths=PackedStringArray("collision_component") instance=ExtResource("7_v53ad")]
+collision_component = NodePath("../CollisionComponent")
+
+[node name="NavigationComponent" parent="CharacterComponent" instance=ExtResource("9_w1la1")]
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.211765, 0.537255, 0.913725, 1)
+debug_path_custom_point_size = 8.0
+debug_path_custom_line_width = 4.0
+
+[node name="DetectionComponent" parent="CharacterComponent" instance=ExtResource("10_7lk4i")]
+visible = false
+collision_layer = 0
+collision_mask = 0
+
+[node name="MobBrainComponent" parent="CharacterComponent" node_paths=PackedStringArray("nav_component", "detection_component", "character_component") instance=ExtResource("8_qhsgf")]
+nav_component = NodePath("../NavigationComponent")
+detection_component = NodePath("../DetectionComponent")
+character_component = NodePath("..")
+
+[node name="HumanHitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("character_component") instance=ExtResource("10_11kjr")]
+collision_layer = 16
+collision_mask = 2
+shape = ExtResource("5_qb754")
+character_component = NodePath("..")
+
+[node name="AttackComponent" type="StaticBody2D" parent="CharacterComponent"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="AttackShape" type="CollisionShape2D" parent="CharacterComponent/AttackComponent"]
+position = Vector2(-37, 10)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_c5uvh")

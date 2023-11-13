@@ -5,8 +5,6 @@ class_name CharacterComponent
 @export var healthbar_component : HealthBarComponent
 @export var collision_component : CollisionComponent
 @export var sprite_component : SpriteComponent
-@export var damage_component : DamageProcess
-@export var movement_component : MovementProcess
 
 # CHARACTER STATE VARS -------------------------- #
 @export var health: float = 100.0
@@ -31,6 +29,7 @@ var jump_hang_gravity_mult : float = 0.1
 var jump_coyote : float = 0.08
 var jump_buffer : float = 0.1
 var is_jumping := false
+var is_attacking := false
 var gravity_acceleration : float = 3840
 var gravity_max : float = 1020
 var jump_coyote_timer : float = 0
@@ -38,6 +37,9 @@ var jump_buffer_timer : float = 0
 
 
 func _ready():
+	# update name
+	set_name.call_deferred(get_parent().name)
+	
 	# add character to groups
 	add_to_group("Characters")
 	
@@ -48,19 +50,19 @@ func _ready():
 	# $DamageCooldownTimer.start(self.damage_cooldown) ?
 	self.invincible = false
 
-func _physics_process(delta):
-	# callback processes
-	var dmg = self.damage_component.process_damage()
-	self.take_damage(dmg)
-	var mv = self.movement_component.process_movement()
-	self.move(mv, delta)
-
 func move(input: Dictionary, delta: float) -> void:
+	# TODO if !self.dead and !self.is_attacking:
+	
 	# calculate horizontal velocity
 	x_movement(input, delta)
 	
 	# calculate vertical velocity
 	jump_logic(input, delta)
+	
+	# attack
+	attack(input)
+	
+	# gravity
 	apply_gravity(delta)
 	
 	# update movement timers
@@ -71,6 +73,9 @@ func move(input: Dictionary, delta: float) -> void:
 
 	# determine the new animation state and update callbacks
 	select_animation_state()
+
+func attack(input: Dictionary):
+	pass
 
 func x_movement(input: Dictionary, delta: float) -> void:
 	var x_dir = input["x"]
@@ -101,6 +106,9 @@ func select_animation_state() -> void:
 	elif is_jumping:
 		# jump animation
 		self.sprite_component.update_animation_state("jump")
+	elif is_attacking:
+		# attack animation
+		self.sprite_component.update_animation_state("attack")
 	else:
 		self.sprite_component.update_animation_state("idle")
 

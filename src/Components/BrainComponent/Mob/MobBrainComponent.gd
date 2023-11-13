@@ -4,6 +4,7 @@ class_name MobBrainComponent
 @export var nav_component : NavigationComponent
 @export var detection_component : DetectionComponent
 @export var character_component : CharacterComponent
+@export var attack_component : Node2D
 @export var jump_threshold : float = -16.0
 @export var turn_threshold : float = 5.0
 
@@ -21,6 +22,13 @@ func process_movement() -> Dictionary:
 	var x : int = 0
 	var y : int = 0
 	var just_jump : bool = false
+	var attack : bool = false
+	
+	# determine attack
+#	if self.attack_component != null:
+#		var body = self.detection_component.body_detected
+#		var random_atk = Util.rand_float(0.0, 1.0) >= 0.90
+#		attack = body and random_atk
 	
 	# update navigation target
 	var body = self.detection_component.body_detected
@@ -52,6 +60,7 @@ func process_movement() -> Dictionary:
 		"y": y,
 		"just_jump": just_jump,
 		"released_jump": false,
+		"attack": attack,
 	}
 
 func _on_jump_cooldown_timer_timeout():

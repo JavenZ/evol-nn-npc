@@ -19,6 +19,20 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("7_prwoo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_oaajx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_uoi5e")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("1_l8p8y")
 }, {
 "duration": 1.0,
@@ -43,20 +57,6 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_prwoo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_oaajx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_uoi5e")
-}],
-"loop": true,
-"name": &"stab",
 "speed": 5.0
 }, {
 "frames": [{

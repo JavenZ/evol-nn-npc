@@ -1,5 +1,5 @@
 extends Area2D
-class_name HumanHitBoxComponent
+class_name HitBoxComponent
 
 @export var shape : Shape2D
 @export var health_component : HealthComponent
@@ -9,7 +9,8 @@ func _ready():
 	$CollisionShape.shape = self.shape
 
 func _physics_process(delta):
-	self.health_component.damage(process_damage())
+	if !inside_bodies.is_empty():
+		self.health_component.damage(process_damage())
 
 func process_damage() -> float:
 	# check for enemies inside of player
@@ -19,6 +20,8 @@ func process_damage() -> float:
 	return total_dmg
 
 func _on_hit_box_body_entered(body):
+	print(name, ": body entered hitbox (", body.name, ")")
+	print(body is AttackComponent)
 	self.inside_bodies.append(body)
 
 func _on_hit_box_body_exited(body):

@@ -41,8 +41,10 @@ func update_state(new_state: States) -> void:
 		self.sprite_component.update_animation_state("dead")
 
 func _ready():
-	# update name
+	# update names
 	set_name.call_deferred(get_parent().name)
+	for child in get_children():
+		child.set_name.call_deferred(get_parent().name)
 	
 	# add character to groups
 	add_to_group("Characters")
@@ -93,7 +95,6 @@ func death():
 
 func attack(input: Dictionary):
 	if self.attack_component != null and input['attack'] == true:
-		print("ATTACKING")
 		self.update_state(States.ATTACK)
 		self.attack_component.start_attack()
 

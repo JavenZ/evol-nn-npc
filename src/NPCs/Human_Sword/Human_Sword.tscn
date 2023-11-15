@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ewr87m8f2mdf" path="res://Components/BrainComponent/Mob/MobBrainComponent.tscn" id="8_qhsgf"]
 [ext_resource type="PackedScene" uid="uid://b7wydua5u4l3w" path="res://Components/NavigationComponent/NavigationComponent.tscn" id="9_w1la1"]
 [ext_resource type="PackedScene" uid="uid://chp3gw8xnv336" path="res://Components/DetectionComponent/DetectionComponent.tscn" id="10_7lk4i"]
-[ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/Human/HumanHitBoxComponent.tscn" id="10_11kjr"]
+[ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/HitBoxComponent.tscn" id="10_11kjr"]
 [ext_resource type="Script" path="res://NPCs/Human_Sword/AttackComponent.gd" id="11_c6iko"]
 [ext_resource type="PackedScene" uid="uid://bojr524aeduio" path="res://Components/HealthComponent/HealthComponent.tscn" id="11_qie8o"]
 
@@ -60,7 +60,7 @@ detection_component = NodePath("../DetectionComponent")
 character_component = NodePath("..")
 attack_component = NodePath("../AttackComponent")
 
-[node name="HumanHitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("health_component") instance=ExtResource("10_11kjr")]
+[node name="HitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("health_component") instance=ExtResource("10_11kjr")]
 collision_layer = 16
 collision_mask = 2
 shape = ExtResource("5_qb754")

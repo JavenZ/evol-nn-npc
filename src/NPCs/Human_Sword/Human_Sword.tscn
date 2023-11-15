@@ -28,7 +28,7 @@ health_component = NodePath("HealthComponent")
 [node name="SpriteComponent" parent="CharacterComponent" instance=ExtResource("2_xdjx3")]
 scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("3_kupis")
-animation = &"idle"
+animation = &"attack"
 current_direction = -1
 spawn_direction = -1
 
@@ -52,10 +52,11 @@ visible = false
 collision_layer = 0
 collision_mask = 0
 
-[node name="MobBrainComponent" parent="CharacterComponent" node_paths=PackedStringArray("nav_component", "detection_component", "character_component") instance=ExtResource("8_qhsgf")]
+[node name="MobBrainComponent" parent="CharacterComponent" node_paths=PackedStringArray("nav_component", "detection_component", "character_component", "attack_component") instance=ExtResource("8_qhsgf")]
 nav_component = NodePath("../NavigationComponent")
 detection_component = NodePath("../DetectionComponent")
 character_component = NodePath("..")
+attack_component = NodePath("../AttackComponent")
 
 [node name="HumanHitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("health_component") instance=ExtResource("10_11kjr")]
 collision_layer = 16

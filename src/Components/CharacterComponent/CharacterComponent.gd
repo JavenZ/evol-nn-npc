@@ -48,6 +48,8 @@ func _ready():
 	
 	# connect to death signal
 	self.health_component.death.connect(death)
+	# connect to sprite signal
+	self.sprite_component.animation_finished.connect(finished_attack)
 
 func _physics_process(delta):
 	var input = self.brain_component.next_move()
@@ -80,12 +82,17 @@ func move(input: Dictionary, delta: float) -> void:
 	# apply movement and slide from collisions
 	move_and_slide()
 
+func finished_attack():
+	if self.state == States.ATTACK:
+		self.update_state(States.IDLE)
+
 func death():
 	self.update_state(States.DEAD)
 
 func attack(input: Dictionary):
 	# if has attack component
 	if input['attack'] == true:
+		print("ATTACKING")
 		self.update_state(States.ATTACK)
 
 func idle():

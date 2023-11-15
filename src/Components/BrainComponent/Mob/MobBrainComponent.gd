@@ -22,10 +22,11 @@ func next_move() -> Dictionary:
 	var attack : bool = false
 	
 	# determine attack
-#	if self.attack_component != null:
-#		var body = self.detection_component.body_detected
-#		var random_atk = Util.rand_float(0.0, 1.0) >= 0.90
-#		attack = body and random_atk
+	if self.attack_component != null:
+		# var body = self.detection_component.body_detected
+		var random_atk = Util.rand_float(0.0, 1.0) >= 0.90
+		# attack = body and random_atk
+		attack = random_atk
 	
 	# update navigation target
 	var body = self.detection_component.body_detected

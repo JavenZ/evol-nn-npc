@@ -55,3 +55,4 @@ jump={
 2d_physics/layer_4="mob_hitbox"
 2d_physics/layer_5="human_hitbox"
 2d_physics/layer_6="human_attack"
+2d_physics/layer_7="mob_attack"

@@ -11,14 +11,5 @@
 [node name="Human1" parent="TileMapComponent" instance=ExtResource("3_cda5h")]
 position = Vector2(860, 430)
 
-[node name="Human2" parent="TileMapComponent" instance=ExtResource("3_cda5h")]
-position = Vector2(158, 411)
-
-[node name="Human3" parent="TileMapComponent" instance=ExtResource("3_cda5h")]
-position = Vector2(485, 421)
-
 [node name="Mushroom" parent="TileMapComponent" instance=ExtResource("3_nwoc8")]
 position = Vector2(305, 423)
-
-[node name="Mushroom2" parent="TileMapComponent" instance=ExtResource("3_nwoc8")]
-position = Vector2(723, 436)

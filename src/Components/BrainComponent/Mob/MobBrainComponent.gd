@@ -11,24 +11,22 @@ class_name MobBrainComponent
 @onready var tilemap_component = get_tree().get_first_node_in_group('TileMap') as TileMapComponent
 var jump_freeze : bool = false
 
-func _physics_process(delta):
-	self.character_component.move(self.process_movement(), delta)
-
-func process_movement() -> Dictionary:
+func next_move() -> Dictionary:
 	"""
 	Implementation function for processing mob movement.
 	"""
 	# init input vars
 	var x : int = 0
 	var y : int = 0
-	var just_jump : bool = false
+	var jump : bool = false
 	var attack : bool = false
 	
 	# determine attack
-#	if self.attack_component != null:
-#		var body = self.detection_component.body_detected
-#		var random_atk = Util.rand_float(0.0, 1.0) >= 0.90
-#		attack = body and random_atk
+	if self.attack_component != null:
+		# var body = self.detection_component.body_detected
+		var random_atk = Util.rand_float(0.0, 1.0) >= 0.90
+		# attack = body and random_atk
+		attack = random_atk
 	
 	# update navigation target
 	var body = self.detection_component.body_detected
@@ -50,7 +48,7 @@ func process_movement() -> Dictionary:
 		# vertical
 		y = 1 if next_path_dist.y < self.jump_threshold else -1
 		if y == 1 and !self.jump_freeze:
-			just_jump = true
+			jump = true
 			self.jump_freeze = true
 			$JumpCooldownTimer.start(Util.rand_float(1.0, 1.5))
 		
@@ -58,8 +56,7 @@ func process_movement() -> Dictionary:
 	return {
 		"x": x,
 		"y": y,
-		"just_jump": just_jump,
-		"released_jump": false,
+		"jump": jump,
 		"attack": attack,
 	}
 

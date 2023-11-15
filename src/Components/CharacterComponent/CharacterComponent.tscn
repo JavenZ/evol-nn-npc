@@ -4,9 +4,3 @@
 
 [node name="CharacterComponent" type="CharacterBody2D"]
 script = ExtResource("1_lxnfs")
-
-[node name="DamageCooldownTimer" type="Timer" parent="."]
-wait_time = 1.5
-one_shot = true
-
-[connection signal="timeout" from="DamageCooldownTimer" to="." method="_on_damage_cooldown_timer_timeout"]

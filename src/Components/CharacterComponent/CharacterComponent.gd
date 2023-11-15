@@ -6,6 +6,7 @@ class_name CharacterComponent
 @export var sprite_component : SpriteComponent
 @export var brain_component: MobBrainComponent
 @export var health_component : HealthComponent
+@export var attack_component : AttackComponent
 
 # MOVEMENT VARS ---------------- #
 @export var max_speed: float = 560
@@ -84,16 +85,17 @@ func move(input: Dictionary, delta: float) -> void:
 
 func finished_attack():
 	if self.state == States.ATTACK:
+		self.attack_component.stop_attack()
 		self.update_state(States.IDLE)
 
 func death():
 	self.update_state(States.DEAD)
 
 func attack(input: Dictionary):
-	# if has attack component
-	if input['attack'] == true:
+	if self.attack_component != null and input['attack'] == true:
 		print("ATTACKING")
 		self.update_state(States.ATTACK)
+		self.attack_component.start_attack()
 
 func idle():
 	# update state to idle if not moving or falling

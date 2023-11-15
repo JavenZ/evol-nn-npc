@@ -1,14 +1,17 @@
 extends StaticBody2D
 class_name AttackComponent
 
+@export var shape : CollisionShape2D
 @export var damage : float = 10.0
 @export var knockback : float = 0.0
+@export var start_disabled : bool = true
 
 func _ready():
-	stop_attack()
+	if self.start_disabled:
+		stop_attack()
 
 func start_attack():
-	$CollisionShape.disabled = false
+	shape.disabled = false
 
 func stop_attack():
-	$CollisionShape.disabled = true
+	shape.disabled = true

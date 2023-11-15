@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bs2qlxq4bwuon"]
+[gd_scene load_steps=13 format=3 uid="uid://bs2qlxq4bwuon"]
 
 [ext_resource type="PackedScene" uid="uid://bbukliq48khn7" path="res://Components/CharacterComponent/CharacterComponent.tscn" id="1_yx27q"]
 [ext_resource type="PackedScene" uid="uid://npmqb1xw41mh" path="res://Components/CollisionComponent/CollisionComponent.tscn" id="2_61clm"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bojr524aeduio" path="res://Components/HealthComponent/HealthComponent.tscn" id="10_n4431"]
 [ext_resource type="PackedScene" uid="uid://ewr87m8f2mdf" path="res://Components/BrainComponent/Mob/MobBrainComponent.tscn" id="11_0ofxp"]
 [ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/HitBoxComponent.tscn" id="11_1gwtu"]
+[ext_resource type="PackedScene" uid="uid://lxc4svn70xhb" path="res://Components/AttackComponent/AttackComponent.tscn" id="12_w4y64"]
 
 [node name="Mushroom" type="Node2D" groups=["Mobs"]]
 
@@ -22,7 +23,6 @@ brain_component = NodePath("MobBrainComponent")
 health_component = NodePath("HealthComponent")
 
 [node name="CollisionComponent" parent="CharacterComponent" instance=ExtResource("2_61clm")]
-position = Vector2(-3, 0)
 shape = ExtResource("3_5s01f")
 
 [node name="DetectionComponent" parent="CharacterComponent" instance=ExtResource("4_s3t4x")]
@@ -59,3 +59,12 @@ collision_layer = 8
 collision_mask = 32
 shape = ExtResource("3_5s01f")
 health_component = NodePath("../HealthComponent")
+
+[node name="AttackComponent" parent="CharacterComponent" node_paths=PackedStringArray("shape") instance=ExtResource("12_w4y64")]
+collision_layer = 64
+shape = NodePath("CollisionShape2D")
+damage = 5.0
+start_disabled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterComponent/AttackComponent"]
+shape = ExtResource("3_5s01f")

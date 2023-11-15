@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://lxc4svn70xhb"]
+
+[ext_resource type="Script" path="res://Components/AttackComponent/AttackComponent.gd" id="1_t3v32"]
+
+[node name="AttackComponent" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_t3v32")

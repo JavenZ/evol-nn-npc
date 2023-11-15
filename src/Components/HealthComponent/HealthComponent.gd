@@ -49,5 +49,5 @@ func die():
 	self.death.emit()
 
 func _on_damage_cooldown_timer_timeout():
-	print(self.name, " damage cooldown expired.")
+	# print(self.name, " damage cooldown expired.")
 	self.invincible = false

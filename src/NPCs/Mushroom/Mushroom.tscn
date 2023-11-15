@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bs2qlxq4bwuon"]
+[gd_scene load_steps=11 format=3 uid="uid://bs2qlxq4bwuon"]
 
 [ext_resource type="PackedScene" uid="uid://bbukliq48khn7" path="res://Components/CharacterComponent/CharacterComponent.tscn" id="1_yx27q"]
 [ext_resource type="PackedScene" uid="uid://npmqb1xw41mh" path="res://Components/CollisionComponent/CollisionComponent.tscn" id="2_61clm"]
@@ -8,15 +8,17 @@
 [ext_resource type="PackedScene" uid="uid://b7wydua5u4l3w" path="res://Components/NavigationComponent/NavigationComponent.tscn" id="7_f4vkf"]
 [ext_resource type="PackedScene" uid="uid://dw4x6yvynbewu" path="res://Components/SpriteComponent/SpriteComponent.tscn" id="8_2j4hs"]
 [ext_resource type="SpriteFrames" uid="uid://b5lvckvcsikd4" path="res://NPCs/Mushroom/SpriteFrames.tres" id="9_x0pon"]
+[ext_resource type="PackedScene" uid="uid://bojr524aeduio" path="res://Components/HealthComponent/HealthComponent.tscn" id="10_n4431"]
 [ext_resource type="PackedScene" uid="uid://ewr87m8f2mdf" path="res://Components/BrainComponent/Mob/MobBrainComponent.tscn" id="11_0ofxp"]
 
 [node name="Mushroom" type="Node2D" groups=["Mobs"]]
 
-[node name="CharacterComponent" parent="." node_paths=PackedStringArray("healthbar_component", "collision_component", "sprite_component") instance=ExtResource("1_yx27q")]
+[node name="CharacterComponent" parent="." node_paths=PackedStringArray("collision_component", "sprite_component", "brain_component", "health_component") instance=ExtResource("1_yx27q")]
 collision_layer = 2
-healthbar_component = NodePath("HealthBarComponent")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
+brain_component = NodePath("MobBrainComponent")
+health_component = NodePath("HealthComponent")
 
 [node name="CollisionComponent" parent="CharacterComponent" instance=ExtResource("2_61clm")]
 position = Vector2(-3, 0)
@@ -47,3 +49,6 @@ spawn_direction = -1
 nav_component = NodePath("../NavigationComponent")
 detection_component = NodePath("../DetectionComponent")
 character_component = NodePath("..")
+
+[node name="HealthComponent" parent="CharacterComponent" node_paths=PackedStringArray("healthbar_component") instance=ExtResource("10_n4431")]
+healthbar_component = NodePath("../HealthBarComponent")

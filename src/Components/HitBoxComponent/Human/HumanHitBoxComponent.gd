@@ -2,14 +2,14 @@ extends Area2D
 class_name HumanHitBoxComponent
 
 @export var shape : Shape2D
-@export var character_component : CharacterComponent
+@export var health_component : HealthComponent
 var inside_bodies : Array[Node2D] = []
 
 func _ready():
 	$CollisionShape.shape = self.shape
 
 func _physics_process(delta):
-	self.character_component.take_damage(process_damage())
+	self.health_component.damage(process_damage())
 
 func process_damage() -> float:
 	# check for enemies inside of player

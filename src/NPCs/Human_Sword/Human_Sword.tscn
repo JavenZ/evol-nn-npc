@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://rvj3hqxmrk1u"]
+[gd_scene load_steps=13 format=3 uid="uid://rvj3hqxmrk1u"]
 
 [ext_resource type="PackedScene" uid="uid://bbukliq48khn7" path="res://Components/CharacterComponent/CharacterComponent.tscn" id="1_4saij"]
 [ext_resource type="PackedScene" uid="uid://dw4x6yvynbewu" path="res://Components/SpriteComponent/SpriteComponent.tscn" id="2_xdjx3"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b7wydua5u4l3w" path="res://Components/NavigationComponent/NavigationComponent.tscn" id="9_w1la1"]
 [ext_resource type="PackedScene" uid="uid://chp3gw8xnv336" path="res://Components/DetectionComponent/DetectionComponent.tscn" id="10_7lk4i"]
 [ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/Human/HumanHitBoxComponent.tscn" id="10_11kjr"]
+[ext_resource type="PackedScene" uid="uid://bojr524aeduio" path="res://Components/HealthComponent/HealthComponent.tscn" id="11_qie8o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c5uvh"]
 radius = 3.29353
@@ -17,11 +18,12 @@ height = 56.1294
 
 [node name="Human_Sword" type="Node2D" groups=["Humans"]]
 
-[node name="CharacterComponent" parent="." node_paths=PackedStringArray("healthbar_component", "collision_component", "sprite_component") instance=ExtResource("1_4saij")]
+[node name="CharacterComponent" parent="." node_paths=PackedStringArray("collision_component", "sprite_component", "brain_component", "health_component") instance=ExtResource("1_4saij")]
 collision_layer = 4
-healthbar_component = NodePath("HealthBarComponent")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
+brain_component = NodePath("MobBrainComponent")
+health_component = NodePath("HealthComponent")
 
 [node name="SpriteComponent" parent="CharacterComponent" instance=ExtResource("2_xdjx3")]
 scale = Vector2(1.5, 1.5)
@@ -55,11 +57,11 @@ nav_component = NodePath("../NavigationComponent")
 detection_component = NodePath("../DetectionComponent")
 character_component = NodePath("..")
 
-[node name="HumanHitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("character_component") instance=ExtResource("10_11kjr")]
+[node name="HumanHitBoxComponent" parent="CharacterComponent" node_paths=PackedStringArray("health_component") instance=ExtResource("10_11kjr")]
 collision_layer = 16
 collision_mask = 2
 shape = ExtResource("5_qb754")
-character_component = NodePath("..")
+health_component = NodePath("../HealthComponent")
 
 [node name="AttackComponent" type="StaticBody2D" parent="CharacterComponent"]
 collision_layer = 32
@@ -69,3 +71,6 @@ collision_mask = 0
 position = Vector2(-37, 10)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_c5uvh")
+
+[node name="HealthComponent" parent="CharacterComponent" node_paths=PackedStringArray("healthbar_component") instance=ExtResource("11_qie8o")]
+healthbar_component = NodePath("../HealthBarComponent")

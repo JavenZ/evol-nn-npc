@@ -5,21 +5,20 @@ class_name HealthComponent
 @export var health: float = 100.0
 @export var max_health: float = 100.0
 @export var damage_cooldown : float = 0.0
+
 @export var dead : bool = false
 @export var invincible : bool = false
+
+signal death
 
 func _ready():
 	# init health bar
 	self.update_health_bar()
-	
-	# reset invincibility state
-	# $DamageCooldownTimer.start(self.damage_cooldown) ?
-	self.invincible = false
 
 func update_health_bar() -> void:
 	self.healthbar_component.update(self.max_health, self.health)
 
-func take_damage(amount: float) -> void:
+func damage(amount: float) -> void:
 	"""
 	Applies damage to character then updates healthbar and death state.
 	"""
@@ -38,12 +37,16 @@ func take_damage(amount: float) -> void:
 		self.invincible = true
 	
 		# health bar display
-		self.update_health_bar()
+		update_health_bar()
 	
 	# death? ignores invincibility if character has no health
 	if self.health <= 0.0:
-		print(self.name, " died.")
-		self.dead = true
+		die()
+
+func die():
+	print(self.name, " died.")
+	self.dead = true
+	self.death.emit()
 
 func _on_damage_cooldown_timer_timeout():
 	print(self.name, " damage cooldown expired.")

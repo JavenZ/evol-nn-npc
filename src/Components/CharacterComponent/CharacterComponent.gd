@@ -29,6 +29,9 @@ var jump_buffer_timer : float = 0
 enum States {IDLE, WALK, JUMP, ATTACK, DEAD}
 @export var state : States = States.IDLE
 
+# signals
+signal death(character)
+
 func update_state(new_state: States) -> void:
 	self.state = new_state
 	if new_state == States.IDLE:
@@ -42,15 +45,14 @@ func update_state(new_state: States) -> void:
 
 func _ready():
 	# update names
-	set_name.call_deferred(get_parent().name)
 	for child in get_children():
-		child.set_name.call_deferred(get_parent().name)
+		child.set_name.call_deferred(name + "_" + child.name)
 	
 	# add character to groups
 	add_to_group("Characters")
 	
-	# connect to death signal
-	self.health_component.death.connect(death)
+	# connect to health hit signal
+	self.health_component.hit.connect(on_hit)
 	# connect to sprite signal
 	self.sprite_component.animation_finished.connect(finished_attack)
 
@@ -90,8 +92,15 @@ func finished_attack():
 		self.attack_component.stop_attack()
 		self.update_state(States.IDLE)
 
-func death():
+func die():
+	print(name + " died!")
 	self.update_state(States.DEAD)
+	self.death.emit(self)
+
+func on_hit():
+	# check if health is at zero
+	if self.health_component.health <= 0.0:
+		die()
 
 func attack(input: Dictionary):
 	if self.attack_component != null and input['attack'] == true:

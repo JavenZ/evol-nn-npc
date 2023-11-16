@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://lxc4svn70xhb" path="res://Components/AttackComponent/AttackComponent.tscn" id="12_2b1hs"]
 
 [node name="Mushroom" type="CharacterBody2D" node_paths=PackedStringArray("collision_component", "sprite_component", "brain_component", "health_component", "attack_component")]
+collision_layer = 2
 script = ExtResource("1_4uhdj")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
@@ -51,8 +52,9 @@ nav_component = NodePath("../NavigationComponent")
 detection_component = NodePath("../DetectionComponent")
 character_component = NodePath("..")
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component") instance=ExtResource("10_br0pv")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component", "character_component") instance=ExtResource("10_br0pv")]
 healthbar_component = NodePath("../HealthBarComponent")
+character_component = NodePath("..")
 
 [node name="HitBoxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("11_wf1g5")]
 collision_layer = 8

@@ -2,14 +2,14 @@ extends Node
 class_name HealthComponent
 
 @export var healthbar_component : HealthBarComponent
+@export var character_component : CharacterComponent
 @export var health: float = 100.0
 @export var max_health: float = 100.0
 @export var damage_cooldown : float = 0.0
 
-@export var dead : bool = false
-@export var invincible : bool = false
+var invincible : bool = false
 
-signal death
+signal hit
 
 func _ready():
 	# init health bar
@@ -20,10 +20,10 @@ func update_health_bar() -> void:
 
 func damage(amount: float) -> void:
 	"""
-	Applies damage to character then updates healthbar and death state.
+	Applies damage to character then updates healthbar and emits hit signal.
 	"""
-	# is player already dead?
-	if self.dead:
+	# is the character already dead?
+	if self.character_component.state == self.character_component.States.DEAD:
 		return
 	
 	# apply damage?
@@ -32,21 +32,15 @@ func damage(amount: float) -> void:
 		# subtract health
 		self.health = maxf(0.0, self.health - amount)
 		
-		# begin cooldown timer
+		# begin damage cooldown timer
 		$DamageCooldownTimer.start(self.damage_cooldown)
 		self.invincible = true
 	
 		# health bar display
 		update_health_bar()
-	
-	# death? ignores invincibility if character has no health
-	if self.health <= 0.0:
-		die()
-
-func die():
-	print(self.name, " died.")
-	self.dead = true
-	self.death.emit()
+		
+		# emit hit signal
+		self.hit.emit()
 
 func _on_damage_cooldown_timer_timeout():
 	# print(self.name, " damage cooldown expired.")

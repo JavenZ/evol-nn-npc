@@ -15,6 +15,7 @@
 [ext_resource type="Shape2D" uid="uid://yiuajswlgbij" path="res://NPCs/Human_Sword/AttackShape.tres" id="10_2tkja"]
 
 [node name="Human_Sword" type="CharacterBody2D" node_paths=PackedStringArray("collision_component", "sprite_component", "brain_component", "health_component", "attack_component")]
+collision_layer = 4
 script = ExtResource("1_5wpgw")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
@@ -47,7 +48,7 @@ debug_path_custom_line_width = 4.0
 [node name="DetectionComponent" parent="." instance=ExtResource("8_bb60s")]
 visible = false
 collision_layer = 0
-collision_mask = 0
+collision_mask = 8
 
 [node name="MobBrainComponent" parent="." node_paths=PackedStringArray("nav_component", "detection_component", "character_component", "attack_component") instance=ExtResource("2_1am0f")]
 nav_component = NodePath("../NavigationComponent")
@@ -61,8 +62,9 @@ collision_mask = 64
 shape = ExtResource("4_rfyj6")
 health_component = NodePath("../HealthComponent")
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component") instance=ExtResource("5_ww5d7")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component", "character_component") instance=ExtResource("5_ww5d7")]
 healthbar_component = NodePath("../HealthBarComponent")
+character_component = NodePath("..")
 
 [node name="AttackComponent" parent="." node_paths=PackedStringArray("shape") instance=ExtResource("9_nrqrq")]
 collision_layer = 32

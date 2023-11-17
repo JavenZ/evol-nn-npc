@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw4x6yvynbewu"]
-
-[ext_resource type="Script" path="res://Components/SpriteComponent/SpriteComponent.gd" id="1_gaobo"]
-
-[node name="SpriteComponent" type="AnimatedSprite2D"]
-script = ExtResource("1_gaobo")

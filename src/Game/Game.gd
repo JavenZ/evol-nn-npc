@@ -2,6 +2,7 @@ extends Node2D
 class_name Game
 
 signal finished
+signal test
 
 @export var map : Node2D
 @export var team_a : Array[CharacterComponent]

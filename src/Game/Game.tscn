@@ -9,7 +9,7 @@
 script = ExtResource("1_7fvmt")
 map = NodePath("map")
 team_a = [NodePath("map/Human_Sword")]
-team_b = [NodePath("map/Mushroom")]
+team_b = [NodePath("map/Mushroom"), NodePath("map/Mushroom2")]
 
 [node name="map" parent="." instance=ExtResource("2_yll4u")]
 
@@ -18,3 +18,11 @@ position = Vector2(269, 465)
 
 [node name="Mushroom" parent="map" instance=ExtResource("4_5cux8")]
 position = Vector2(1026, 433)
+
+[node name="Mushroom2" parent="map" instance=ExtResource("4_5cux8")]
+position = Vector2(871, 439)
+
+[node name="MatchTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="MatchTimer" to="." method="_on_match_timer_timeout"]

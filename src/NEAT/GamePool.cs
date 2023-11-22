@@ -21,14 +21,17 @@ public partial class GamePool
         PackedScene human_scene = GD.Load("res://NPCs/Human_Sword/Human_Sword.tscn") as PackedScene;
         PackedScene mushroom_scene = GD.Load("res://NPCs/Mushroom/Mushroom.tscn") as PackedScene;
         
+        int j = 0;
         for (int i = 0; i < size; i++)
         {
             // Instantiate game node
             var game = game_scene.Instantiate() as Node2D;
             
             // Space out game position
+            if (i % (int)(size / 10) == 0) j++;
             var new_pos = game.GlobalPosition;
-            new_pos.X += 1100 * i;
+            new_pos.X += 1100 * (i % 10);
+            new_pos.Y += 520 * j;
             game.Position = new_pos;
 
             // Instantiate game teams

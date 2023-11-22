@@ -9,3 +9,4 @@ tile_map = NodePath("TileMapComponent")
 
 [node name="TileMapComponent" parent="." instance=ExtResource("1_tl5b4")]
 position = Vector2(74, 3)
+navigation_visibility_mode = 0

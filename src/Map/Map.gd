@@ -3,7 +3,10 @@ class_name Map
 
 @export var tile_map : TileMapComponent
 
+func get_random_nav_tile():
+	return self.tile_map.get_random_nav_tile()
+
 func spawn_character(char: CharacterComponent):
-	self.add_child(char)
 	char.position = self.tile_map.get_random_nav_tile()
-	char.brain_component.tilemap_component = self.tile_map
+	char.brain_component.map = self
+	self.add_child(char)

@@ -7,9 +7,9 @@
 script = ExtResource("1_7fvmt")
 map = NodePath("map")
 
-[node name="map" parent="." instance=ExtResource("2_yll4u")]
-
 [node name="MatchTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="map" parent="." instance=ExtResource("2_yll4u")]
 
 [connection signal="timeout" from="MatchTimer" to="." method="_on_match_timer_timeout"]

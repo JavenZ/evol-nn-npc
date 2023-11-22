@@ -2,14 +2,15 @@ extends Node
 class_name MobBrainComponent
 
 @export var nav_component : NavigationComponent
+@export var map : Map
 @export var detection_component : DetectionComponent
 @export var character_component : CharacterComponent
 @export var attack_component : Node2D
 @export var jump_threshold : float = -16.0
 @export var turn_threshold : float = 5.0
-@export var tilemap_component : TileMapComponent
 
 var jump_freeze : bool = false
+const max_random_move = 1000.0
 
 func next_move() -> Dictionary:
 	"""
@@ -30,10 +31,11 @@ func next_move() -> Dictionary:
 	
 	# update navigation target
 	var body = self.detection_component.body_detected
-	if body:
+	if body != null:
 		self.nav_component.update_target(body.global_position, Util.rand_float(0.5, 1.0))
 	else:
-		self.nav_component.update_target(self.tilemap_component.get_random_nav_tile(), Util.rand_float(1.5, 3.5))
+		var random_target = self.map.get_random_nav_tile()
+		self.nav_component.update_target(random_target, Util.rand_float(1.5, 3.5))
 	
 	# determine next (x, y) movement
 	if !self.nav_component.finished():

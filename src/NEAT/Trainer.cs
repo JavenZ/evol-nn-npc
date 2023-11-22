@@ -44,7 +44,8 @@ public partial class Trainer : Node
         var experiment = new NeatExperiment<double>(evalScheme, Id)
         {
             IsAcyclic = true,
-            ActivationFnName = ActivationFunctionId.LeakyReLU.ToString()
+            ActivationFnName = ActivationFunctionId.LeakyReLU.ToString(),
+            PopulationSize = 100,
         };
         GD.Print("Initialized experiment.");
 

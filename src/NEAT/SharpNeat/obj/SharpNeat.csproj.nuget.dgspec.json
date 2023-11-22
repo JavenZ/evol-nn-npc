@@ -1,0 +1,77 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/javen/evol-nn-npc/src/NEAT/SharpNeat/SharpNeat.csproj": {}
+  },
+  "projects": {
+    "/home/javen/evol-nn-npc/src/NEAT/SharpNeat/SharpNeat.csproj": {
+      "version": "4.0.0",
+      "restore": {
+        "projectUniqueName": "/home/javen/evol-nn-npc/src/NEAT/SharpNeat/SharpNeat.csproj",
+        "projectName": "SharpNeat",
+        "projectPath": "/home/javen/evol-nn-npc/src/NEAT/SharpNeat/SharpNeat.csproj",
+        "packagesPath": "/home/javen/.nuget/packages/",
+        "outputPath": "/home/javen/evol-nn-npc/src/NEAT/SharpNeat/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/javen/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Redzen": {
+              "target": "Package",
+              "version": "[15.0.0, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.507, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.15, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/229/sdk/7.0.404/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

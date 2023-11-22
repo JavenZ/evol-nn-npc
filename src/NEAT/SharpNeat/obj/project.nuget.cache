@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "1w4IEnBxsznX5Kk4G0+amoL4gtCes5a7vlj9K0CK74xIfvB1iTV2BSNzvkv4wKtewFtDFhFaGsKw3Uzo+OR0Yw==",
+  "success": true,
+  "projectFilePath": "/home/javen/evol-nn-npc/src/NEAT/SharpNeat/SharpNeat.csproj",
+  "expectedPackageFiles": [
+    "/home/javen/.nuget/packages/log4net/2.0.15/log4net.2.0.15.nupkg.sha512",
+    "/home/javen/.nuget/packages/microsoft.netcore.platforms/2.0.0/microsoft.netcore.platforms.2.0.0.nupkg.sha512",
+    "/home/javen/.nuget/packages/redzen/15.0.0/redzen.15.0.0.nupkg.sha512",
+    "/home/javen/.nuget/packages/stylecop.analyzers/1.2.0-beta.507/stylecop.analyzers.1.2.0-beta.507.nupkg.sha512",
+    "/home/javen/.nuget/packages/stylecop.analyzers.unstable/1.2.0.507/stylecop.analyzers.unstable.1.2.0.507.nupkg.sha512",
+    "/home/javen/.nuget/packages/system.configuration.configurationmanager/4.5.0/system.configuration.configurationmanager.4.5.0.nupkg.sha512",
+    "/home/javen/.nuget/packages/system.security.accesscontrol/4.5.0/system.security.accesscontrol.4.5.0.nupkg.sha512",
+    "/home/javen/.nuget/packages/system.security.cryptography.protecteddata/4.5.0/system.security.cryptography.protecteddata.4.5.0.nupkg.sha512",
+    "/home/javen/.nuget/packages/system.security.permissions/4.5.0/system.security.permissions.4.5.0.nupkg.sha512",
+    "/home/javen/.nuget/packages/system.security.principal.windows/4.5.0/system.security.principal.windows.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

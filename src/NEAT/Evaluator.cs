@@ -5,33 +5,12 @@
 
     public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
     {
-        public Trainer trainer {set; get;}
-
-        static PackedScene game_scene = GD.Load("res://Game/Game.tscn") as PackedScene;
-        static PackedScene human_scene = GD.Load("res://NPCs/Human_Sword/Human_Sword.tscn") as PackedScene;
-        static PackedScene mushroom_scene = GD.Load("res://NPCs/Mushroom/Mushroom.tscn") as PackedScene;
-
-        private void CreateGame()
-        {
-            var game = game_scene.Instantiate();
-
-            var team_a = new Godot.Collections.Array<Node>();
-            var mush1 = mushroom_scene.Instantiate();
-
-            team_a.Add(mush1);
-            game.Set("team_a", team_a);
-
-            var team_b = new Godot.Collections.Array<Node>();
-            team_b.Add(human_scene.Instantiate());
-            game.Set("team_b", team_b);
-
-            trainer.AddChild(game);
-        }
+        public GamePool GamePool {set; get;}
 
         public FitnessInfo Evaluate(IBlackBox<double> box)
         {
-            GD.Print("Evaluating!");
-            CreateGame();
+            GamePool.StartGame();
+            GD.Print("Evaluator created game.");
 
             double fitness = 0.0;
             // bool success = true;

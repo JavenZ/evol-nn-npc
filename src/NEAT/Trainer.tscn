@@ -6,5 +6,6 @@
 script = ExtResource("1_fmw0m")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-202, 296)
-zoom = Vector2(0.4, 0.4)
+position = Vector2(5719, 220)
+zoom = Vector2(0.1, 0.1)
+metadata/_edit_group_ = true

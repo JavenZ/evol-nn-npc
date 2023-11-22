@@ -21,10 +21,20 @@ using System.Collections;
 public partial class Trainer : Node
 {
     // Member variables here, example:
+    [Export]
+    public int PopulationSize = 10;
+
+    public static GamePool GamePool;
 
     public override void _Ready()
     {
         GD.Print($"Trainer Ready()");
+
+        // Initialize game pool
+        GamePool = new GamePool() { trainer=this };
+        GamePool.Initialize(PopulationSize);
+
+        // Start training process
         train();
     }
 
@@ -42,7 +52,7 @@ public partial class Trainer : Node
         // Create the evaluation scheme
         var evalScheme = new EvaluationScheme()
         {
-            trainer=this,
+            GamePool=GamePool,
         };
         GD.Print("Initialized evaluation scheme.");
         
@@ -51,7 +61,7 @@ public partial class Trainer : Node
         {
             IsAcyclic = true,
             ActivationFnName = ActivationFunctionId.LeakyReLU.ToString(),
-            PopulationSize = 10,
+            PopulationSize = PopulationSize,
         };
         GD.Print("Initialized experiment.");
 
@@ -64,8 +74,12 @@ public partial class Trainer : Node
         var neatPop = ea.Population;
         GD.Print(neatPop.Stats);
 
-        for(int i = 0; i < 1; i++)
+        for(int i = 0; i < 0; i++)
         {
+            // Initialize game pool
+            GamePool.Initialize(PopulationSize);
+
+            // Evaluate generation
             ea.PerformOneGeneration();
             GD.Print($"Gen[{ea.Stats.Generation}] Fit_Best={neatPop.Stats.BestFitness.PrimaryFitness}, Fit_Mean={neatPop.Stats.MeanFitness}, Complexity_Mean={neatPop.Stats.MeanComplexity}, Complexity_Mode={ea.ComplexityRegulationMode}");
 

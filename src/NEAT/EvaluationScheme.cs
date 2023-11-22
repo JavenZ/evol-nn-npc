@@ -4,7 +4,7 @@
 
     public sealed class EvaluationScheme : IBlackBoxEvaluationScheme<double>
     {
-        public Trainer trainer {set; get;}
+        public GamePool GamePool {set; get;}
 
         /// <inheritdoc/>
         public int InputCount => 3;
@@ -22,14 +22,14 @@
         public FitnessInfo NullFitness => FitnessInfo.DefaultFitnessInfo;
 
         /// <inheritdoc/>
-        public bool EvaluatorsHaveState => false;
+        public bool EvaluatorsHaveState => true;
 
         /// <inheritdoc/>
         public IPhenomeEvaluator<IBlackBox<double>> CreateEvaluator()
         {
             return new Evaluator()
             {
-                trainer=trainer,
+                GamePool=GamePool,
             };
         }
 

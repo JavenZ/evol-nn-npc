@@ -45,7 +45,7 @@ public partial class Trainer : Node
         {
             IsAcyclic = true,
             ActivationFnName = ActivationFunctionId.LeakyReLU.ToString(),
-            PopulationSize = 100,
+            PopulationSize = 1,
         };
         GD.Print("Initialized experiment.");
 
@@ -58,7 +58,7 @@ public partial class Trainer : Node
         var neatPop = ea.Population;
         GD.Print(neatPop.Stats);
 
-        for(int i = 0; i < 10_000; i++)
+        for(int i = 0; i < 1; i++)
         {
             ea.PerformOneGeneration();
             GD.Print($"Gen[{ea.Stats.Generation}] Fit_Best={neatPop.Stats.BestFitness.PrimaryFitness}, Fit_Mean={neatPop.Stats.MeanFitness}, Complexity_Mean={neatPop.Stats.MeanComplexity}, Complexity_Mode={ea.ComplexityRegulationMode}");

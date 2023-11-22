@@ -21,7 +21,7 @@ public partial class Trainer : Node
         var a = "tests";
         GD.Print($"Hello {a} from C# to Godot :)");
 
-        test();
+        // test();
     }
 
     public override void _Process(double delta)

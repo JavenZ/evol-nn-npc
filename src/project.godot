@@ -11,9 +11,8 @@ config_version=5
 [application]
 
 config/name="Evol-nn-npc"
-run/main_scene="res://Game/Game.tscn"
+run/main_scene="res://NEAT/Trainer.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
-config/icon="res://icon.svg"
 
 [dotnet]
 

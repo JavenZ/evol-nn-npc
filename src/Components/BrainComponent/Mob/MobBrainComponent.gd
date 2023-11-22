@@ -7,8 +7,8 @@ class_name MobBrainComponent
 @export var attack_component : Node2D
 @export var jump_threshold : float = -16.0
 @export var turn_threshold : float = 5.0
+@export var tilemap_component : TileMapComponent
 
-@onready var tilemap_component = get_tree().get_first_node_in_group('TileMap') as TileMapComponent
 var jump_freeze : bool = false
 
 func next_move() -> Dictionary:
@@ -33,7 +33,7 @@ func next_move() -> Dictionary:
 	if body:
 		self.nav_component.update_target(body.global_position, Util.rand_float(0.5, 1.0))
 	else:
-		self.nav_component.update_target(self.tilemap_component.get_random_tile(1), Util.rand_float(1.5, 3.5))
+		self.nav_component.update_target(self.tilemap_component.get_random_nav_tile(), Util.rand_float(1.5, 3.5))
 	
 	# determine next (x, y) movement
 	if !self.nav_component.finished():

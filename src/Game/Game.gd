@@ -3,17 +3,28 @@ class_name Game
 
 signal finished(report)
 
-@export var map : Node2D
+@export var map : Map
 @export var team_a : Array[CharacterComponent]
 @export var team_b : Array[CharacterComponent]
 @export var match_time : float = 60.0
 
+@onready var a_name = self.name + "_TeamA"
+@onready var b_name = self.name + "_TeamB"
+
 func _ready():
+	var mush_scene = preload("res://NPCs/Mushroom/Mushroom.tscn")
+	var human_scene = preload("res://NPCs/Human_Sword/Human_Sword.tscn")
+	team_a.append(mush_scene.instantiate())
+	team_a.append(mush_scene.instantiate())
+	team_b.append(human_scene.instantiate())
+	
 	for node in self.team_a:
-		node.add_to_group("TeamA")
+		self.map.spawn_character(node)
+		node.add_to_group(a_name)
 		node.connect("death", on_character_death)
 	for node in self.team_b:
-		node.add_to_group("TeamB")
+		self.map.spawn_character(node)
+		node.add_to_group(b_name)
 		node.connect("death", on_character_death)
 	
 	# start match timer
@@ -22,8 +33,8 @@ func _ready():
 func finish_match():
 	print("Match finished!")
 	# who won?
-	var a_size = len(get_tree().get_nodes_in_group("TeamA"))
-	var b_size = len(get_tree().get_nodes_in_group("TeamB"))
+	var a_size = len(get_tree().get_nodes_in_group(a_name))
+	var b_size = len(get_tree().get_nodes_in_group(b_name))
 	var winner = "Tie"
 	if a_size == 0:
 		winner = "TeamB"
@@ -56,6 +67,7 @@ func finish_match():
 	
 	# create match report
 	var report = {
+		'game': self.name,
 		'winner': winner,
 		'match_time': match_total_time,
 		'a_damage_given': a_damage_given,
@@ -77,8 +89,8 @@ func on_character_death(character):
 	self.map.remove_child(character)
 	
 	# have either teams been defeated?
-	var a_size = len(get_tree().get_nodes_in_group("TeamA"))
-	var b_size = len(get_tree().get_nodes_in_group("TeamB"))
+	var a_size = len(get_tree().get_nodes_in_group(a_name))
+	var b_size = len(get_tree().get_nodes_in_group(b_name))
 	if a_size == 0 or b_size == 0:
 		finish_match()
 

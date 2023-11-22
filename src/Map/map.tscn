@@ -1,7 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://6m0eceqysk2m"]
+[gd_scene load_steps=3 format=3 uid="uid://6m0eceqysk2m"]
 
+[ext_resource type="Script" path="res://Map/Map.gd" id="1_ffhui"]
 [ext_resource type="PackedScene" uid="uid://bvc2k8mnhjl6f" path="res://Components/TileMapComponent/TileMapComponent.tscn" id="1_tl5b4"]
 
-[node name="map" type="Node2D"]
+[node name="map" type="Node2D" node_paths=PackedStringArray("tile_map")]
+script = ExtResource("1_ffhui")
+tile_map = NodePath("TileMapComponent")
 
 [node name="TileMapComponent" parent="." instance=ExtResource("1_tl5b4")]
+position = Vector2(74, 3)

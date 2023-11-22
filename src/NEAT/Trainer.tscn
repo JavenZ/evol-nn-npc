@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4ejh5oxmhm4r"]
+[gd_scene load_steps=3 format=3 uid="uid://c4ejh5oxmhm4r"]
 
 [ext_resource type="Script" path="res://NEAT/Trainer.cs" id="1_fmw0m"]
+[ext_resource type="PackedScene" uid="uid://ceffchdaybgjs" path="res://Game/Game.tscn" id="2_lfxvn"]
 
 [node name="Trainer" type="Node"]
 script = ExtResource("1_fmw0m")
+
+[node name="Game" parent="." instance=ExtResource("2_lfxvn")]
+position = Vector2(50, 514)
+
+[node name="Game2" parent="." instance=ExtResource("2_lfxvn")]
+position = Vector2(-1553, -415)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-202, 296)
+zoom = Vector2(0.4, 0.4)

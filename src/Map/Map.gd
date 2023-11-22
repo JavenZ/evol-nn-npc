@@ -8,5 +8,6 @@ func get_random_nav_tile():
 
 func spawn_character(char: CharacterComponent):
 	char.position = self.tile_map.get_random_nav_tile()
-	char.brain_component.map = self
+	if char.brain_component != null:
+		char.brain_component.map = self
 	self.add_child(char)

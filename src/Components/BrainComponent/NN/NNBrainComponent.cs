@@ -2,6 +2,8 @@ using Godot;
 using System;
 using SharpNeat;
 
+#pragma warning disable
+
 [GlobalClass]
 public partial class NNBrainComponent : Node
 {

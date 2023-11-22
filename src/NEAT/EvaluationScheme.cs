@@ -1,7 +1,11 @@
     using SharpNeat;
 
+    #pragma warning disable
+
     public sealed class EvaluationScheme : IBlackBoxEvaluationScheme<double>
     {
+        public Trainer trainer {set; get;}
+
         /// <inheritdoc/>
         public int InputCount => 3;
 
@@ -23,7 +27,10 @@
         /// <inheritdoc/>
         public IPhenomeEvaluator<IBlackBox<double>> CreateEvaluator()
         {
-            return new Evaluator();
+            return new Evaluator()
+            {
+                trainer=trainer,
+            };
         }
 
         /// <inheritdoc/>

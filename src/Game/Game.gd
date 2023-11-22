@@ -4,20 +4,14 @@ class_name Game
 signal finished(report)
 
 @export var map : Map
-@export var team_a : Array[CharacterComponent]
-@export var team_b : Array[CharacterComponent]
+@export var team_a : Array
+@export var team_b : Array
 @export var match_time : float = 60.0
 
 @onready var a_name = self.name + "_TeamA"
 @onready var b_name = self.name + "_TeamB"
 
 func _ready():
-	var mush_scene = preload("res://NPCs/Mushroom/Mushroom.tscn")
-	var human_scene = preload("res://NPCs/Human_Sword/Human_Sword.tscn")
-	team_a.append(mush_scene.instantiate())
-	team_a.append(mush_scene.instantiate())
-	team_b.append(human_scene.instantiate())
-	
 	for node in self.team_a:
 		self.map.spawn_character(node)
 		node.add_to_group(a_name)

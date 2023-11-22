@@ -4,7 +4,7 @@ class_name CharacterComponent
 # NODE REFERENCES
 @export var collision_component : CollisionComponent
 @export var sprite_component : SpriteComponent
-@export var brain_component: MobBrainComponent
+@export var brain_component: NNBrainComponent
 @export var health_component : HealthComponent
 @export var attack_component : AttackComponent
 
@@ -57,23 +57,24 @@ func _ready():
 	self.sprite_component.animation_finished.connect(finished_attack)
 
 func _physics_process(delta):
-	var input = self.brain_component.next_move()
-	move(input, delta)
+	if self.brain_component != null:
+		var decision = self.brain_component.next_move() as OutputDecision;
+		move(decision, delta)
 
-func move(input: Dictionary, delta: float) -> void:
+func move(decision: OutputDecision, delta: float) -> void:
 	# block input if character is dead
 	if self.state != States.DEAD:
 		
 		if self.state == States.IDLE:
 			# attack
-			attack(input)
+			attack(decision)
 			
 		if self.state != States.ATTACK:
 			# vertical movement
-			jump(input, delta)
+			jump(decision, delta)
 			
 			# horizontal movement
-			walk(input, delta)
+			walk(decision, delta)
 			
 			# idle movement
 			idle()
@@ -102,8 +103,8 @@ func on_hit():
 	if self.health_component.health <= 0.0:
 		die()
 
-func attack(input: Dictionary):
-	if self.attack_component != null and input['attack'] == true:
+func attack(decision: OutputDecision):
+	if self.attack_component != null and decision.attack == true:
 		self.update_state(States.ATTACK)
 		self.attack_component.start_attack()
 
@@ -112,9 +113,9 @@ func idle():
 	if is_on_floor() and self.velocity.x == 0:
 		self.update_state(States.IDLE)
 
-func walk(input: Dictionary, delta: float):
+func walk(decision: OutputDecision, delta: float):
 	# x input
-	var x_dir = input["x"]
+	var x_dir = decision.x
 
 	# decelerate if we're not doing movement inputs
 	if x_dir == 0: 
@@ -138,12 +139,12 @@ func walk(input: Dictionary, delta: float):
 	if is_on_floor() and self.velocity.x != 0:
 		self.update_state(States.WALK)
 
-func jump(input: Dictionary, _delta: float) -> void:
+func jump(decision: OutputDecision, _delta: float) -> void:
 	# Reset our jump requirements
 	if is_on_floor():
 		jump_coyote_timer = jump_coyote
 		# is_jumping = false
-	if input["jump"]:
+	if decision.jump:
 		jump_buffer_timer = jump_buffer
 	
 	# Jump if grounded, there is jump input, and we aren't jumping already

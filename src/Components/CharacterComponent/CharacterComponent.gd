@@ -59,12 +59,12 @@ func _ready():
 func _physics_process(delta):
 	if self.brain_component != null:
 		var input_state = InputState.new()
-		input_state.MyHealth = self.health_component.health
+		input_state.MyHealth = self.health_component.health / self.health_component.max_health
 		
 		var decision = self.brain_component.NextMove(input_state) as OutputDecision;
 		move(decision, delta)
-	else:
-		move(OutputDecision.new(), delta)
+#	else:
+#		move(OutputDecision.new(), delta)
 
 func move(decision: OutputDecision, delta: float) -> void:
 	# block input if character is dead
@@ -109,7 +109,6 @@ func on_hit():
 		die()
 
 func attack(decision: OutputDecision):
-	if self.attack_component != null and decision.attack == true:
 		self.update_state(States.ATTACK)
 		self.attack_component.start_attack()
 

@@ -25,7 +25,7 @@ func _ready():
 	$MatchTimer.start(self.match_time)
 
 func finish_match():
-	print("Match finished!")
+	# print("Match finished!")
 	# who won?
 	var a_size = len(get_tree().get_nodes_in_group(a_name))
 	var b_size = len(get_tree().get_nodes_in_group(b_name))
@@ -75,7 +75,7 @@ func finish_match():
 	}
 	
 	# emit finished signal
-	print(report)
+	# print(report)
 	self.finished.emit(report)
 
 func on_character_death(character):

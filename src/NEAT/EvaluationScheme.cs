@@ -7,10 +7,10 @@
         public GamePool GamePool {set; get;}
 
         /// <inheritdoc/>
-        public int InputCount => 3;
+        public int InputCount => 2; // +1 for bias!
 
         /// <inheritdoc/>
-        public int OutputCount => 1;
+        public int OutputCount => 3;
 
         /// <inheritdoc/>
         public bool IsDeterministic => true;

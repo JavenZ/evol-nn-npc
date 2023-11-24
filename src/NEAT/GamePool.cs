@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using SharpNeat;
 
 // [GlobalClass]
 public partial class GamePool
@@ -7,6 +8,7 @@ public partial class GamePool
     private static Godot.Mutex mutex = new Godot.Mutex();
     private static int game_index = 0;
     private static Array<Node2D> pool;
+    private static Godot.Collections.Dictionary<Node2D, Array<NNBrainComponent>> BrainPool;
 
     public Trainer trainer {set; get;}
 
@@ -16,6 +18,7 @@ public partial class GamePool
         GD.Print("Initializing game pool...");
         game_index = 0;
         pool = new Array<Node2D>();
+        BrainPool = new Godot.Collections.Dictionary<Node2D, Array<NNBrainComponent>>();
 
         PackedScene game_scene = GD.Load("res://Game/Game.tscn") as PackedScene;
         PackedScene human_scene = GD.Load("res://NPCs/Human_Sword/Human_Sword.tscn") as PackedScene;
@@ -27,6 +30,7 @@ public partial class GamePool
         {
             // Instantiate game node
             var game = game_scene.Instantiate() as Node2D;
+            BrainPool[game] = new Array<NNBrainComponent>();
             
             // Space out game position
             if (i % (int)(size / 10) == 0) j++;
@@ -38,13 +42,17 @@ public partial class GamePool
             // Instantiate game teams
             var team_a = new Array<Node>();
             var mush1 = mushroom_scene.Instantiate();
-            mush1.Set("brain_component", brain_scene.Instantiate() as NNBrainComponent);
+            var brain1 = brain_scene.Instantiate() as NNBrainComponent;
+            BrainPool[game].Add(brain1);
+            mush1.Set("brain_component", brain1);
             team_a.Add(mush1);
             game.Set("team_a", team_a);
 
             var team_b = new Array<Node>();
             var human1 = human_scene.Instantiate();
-            human1.Set("brain_component", brain_scene.Instantiate() as NNBrainComponent);
+            var brain2 = brain_scene.Instantiate() as NNBrainComponent;
+            BrainPool[game].Add(brain2);
+            human1.Set("brain_component", brain2);
             team_b.Add(human1);
             game.Set("team_b", team_b);
 
@@ -54,7 +62,7 @@ public partial class GamePool
         GD.Print("Game pool initialized!");
     }
 
-    public async Task<float> StartGame()
+    public async Task<float> StartGame(IBlackBox<double> box)
     {
         // THREAD SAFE
         GD.Print("Starting game...");
@@ -64,6 +72,12 @@ public partial class GamePool
         var game = pool[game_index];
         game_index += 1;
         mutex.Unlock();
+
+        // Update brain component with box
+        foreach (NNBrainComponent brain in BrainPool[game])
+        {
+            brain.Box = box;
+        }
 
         // Add game to scene tree
         trainer.CallDeferred("add_child", game);

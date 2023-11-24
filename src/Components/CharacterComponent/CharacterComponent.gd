@@ -57,10 +57,14 @@ func _ready():
 	self.sprite_component.animation_finished.connect(finished_attack)
 
 func _physics_process(delta):
-	var decision = OutputDecision.new()
 	if self.brain_component != null:
-		decision = self.brain_component.next_move() as OutputDecision;
-	move(decision, delta)
+		var input_state = InputState.new()
+		input_state.MyHealth = self.health_component.health
+		
+		var decision = self.brain_component.NextMove(input_state) as OutputDecision;
+		move(decision, delta)
+	else:
+		move(OutputDecision.new(), delta)
 
 func move(decision: OutputDecision, delta: float) -> void:
 	# block input if character is dead

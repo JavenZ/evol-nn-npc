@@ -9,7 +9,7 @@ public partial class NNBrainComponent : Node
 {
     IBlackBox<double> Box {set; get;}
 
-    public OutputDecision nextMove(InputState input)
+    public OutputDecision NextMove(InputState input)
     {
         var output = new OutputDecision()
         {

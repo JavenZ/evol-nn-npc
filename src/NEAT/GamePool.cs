@@ -20,6 +20,7 @@ public partial class GamePool
         PackedScene game_scene = GD.Load("res://Game/Game.tscn") as PackedScene;
         PackedScene human_scene = GD.Load("res://NPCs/Human_Sword/Human_Sword.tscn") as PackedScene;
         PackedScene mushroom_scene = GD.Load("res://NPCs/Mushroom/Mushroom.tscn") as PackedScene;
+        PackedScene brain_scene = GD.Load("res://Components/BrainComponent/NN/NNBrainComponent.tscn") as PackedScene;
         
         int j = 0;
         for (int i = 0; i < size; i++)
@@ -37,13 +38,13 @@ public partial class GamePool
             // Instantiate game teams
             var team_a = new Array<Node>();
             var mush1 = mushroom_scene.Instantiate();
-            // TODO perform brain init?
+            mush1.Set("brain_component", brain_scene.Instantiate() as NNBrainComponent);
             team_a.Add(mush1);
             game.Set("team_a", team_a);
 
             var team_b = new Array<Node>();
             var human1 = human_scene.Instantiate();
-            // TODO perform brain init?
+            human1.Set("brain_component", brain_scene.Instantiate() as NNBrainComponent);
             team_b.Add(human1);
             game.Set("team_b", team_b);
 

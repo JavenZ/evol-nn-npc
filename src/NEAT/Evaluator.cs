@@ -7,12 +7,11 @@
     {
         public GamePool GamePool {set; get;}
 
-        public FitnessInfo Evaluate(IBlackBox<double> box)
+        public async Task<FitnessInfo> Evaluate(IBlackBox<double> box)
         {
-            GamePool.StartGame();
-            GD.Print("Evaluator created game.");
+            // double fitness = await GamePool.StartGame();
+            double fitness = await GamePool.StartGame();
 
-            double fitness = 0.0;
             // bool success = true;
 
             // // Test case 0, 0.

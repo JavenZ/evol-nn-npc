@@ -1,5 +1,7 @@
 ﻿// This file is part of SharpNEAT; Copyright Colin D. Green.
 // See LICENSE.txt for details.
+using Godot;
+
 namespace SharpNeat.Evaluation;
 
 /// <summary>
@@ -79,13 +81,13 @@ public class ParallelGenomeListEvaluatorStateless<TGenome,TPhenome> : IGenomeLis
     /// Evaluates a list of genomes, assigning fitness info to each.
     /// </summary>
     /// <param name="genomeList">The list of genomes to evaluate.</param>
-    public void Evaluate(IList<TGenome> genomeList)
+    public async Task Evaluate(IList<TGenome> genomeList)
     {
         // Decode and evaluate genomes in parallel.
-        Parallel.ForEach(
+        await Parallel.ForEachAsync(
             genomeList,
             _parallelOptions,
-            (genome) =>
+            async (genome, ct) =>
             {
                 using TPhenome phenome = _genomeDecoder.Decode(genome);
                 if(phenome is null)
@@ -94,9 +96,12 @@ public class ParallelGenomeListEvaluatorStateless<TGenome,TPhenome> : IGenomeLis
                 }
                 else
                 {
-                    genome.FitnessInfo = _phenomeEvaluator.Evaluate(phenome);
+                    genome.FitnessInfo = await _phenomeEvaluator.Evaluate(phenome);
+                    GD.Print("Fitness evaluated!");
                 }
             });
+        GD.Print("FINISHED EVALUATING GENOME LIST");
+
     }
 
     /// <summary>

@@ -13,5 +13,5 @@ public interface IPhenomeEvaluator<TPhenome>
     /// </summary>
     /// <param name="phenome">The phenome to evaluate.</param>
     /// <returns>An instance of <see cref="FitnessInfo"/> that conveys the phenome's fitness scores/data.</returns>
-    FitnessInfo Evaluate(TPhenome phenome);
+    Task<FitnessInfo> Evaluate(TPhenome phenome);
 }

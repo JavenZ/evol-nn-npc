@@ -3,6 +3,7 @@
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using Godot;
 using Redzen.Sorting;
 using SharpNeat.Neat.ComplexityRegulation;
 using SharpNeat.Neat.Reproduction.Asexual;
@@ -136,10 +137,10 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
     /// <summary>
     /// Initialise the evolutionary algorithm.
     /// </summary>
-    public void Initialise()
+    public async Task Initialise()
     {
         // Evaluate each genome in the new population.
-        _evaluator.Evaluate(_pop.GenomeList);
+        await _evaluator.Evaluate(_pop.GenomeList);
 
         // Initialise species.
         _pop.InitialiseSpecies(
@@ -155,7 +156,7 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
     /// <summary>
     /// Perform one generation of the evolution algorithm.
     /// </summary>
-    public void PerformOneGeneration()
+    public async Task PerformOneGeneration()
     {
         if(_pop.SpeciesArray is null)
             throw new InvalidOperationException("Algorithm is not initialised.");
@@ -180,7 +181,8 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
         _pop.GenomeList.AddRange(offspringList);
 
         // Genome evaluation.
-        DoGenomeEvaluation(offspringList, out ulong evaluationCount);
+        ulong evaluationCount = await DoGenomeEvaluation(offspringList);
+        GD.Print($"Eval count: {evaluationCount}");
 
         // Integrate offspring into the species.
         IntegrateOffspringIntoSpecies(offspringList, emptySpeciesFlag);
@@ -240,9 +242,7 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
     /// </summary>
     /// <param name="offspringList">The list of offspring genomes to evaluate.</param>
     /// <param name="evaluationCount">Returns the number of evaluations that were performed.</param>
-    private void DoGenomeEvaluation(
-        List<NeatGenome<T>> offspringList,
-        out ulong evaluationCount)
+    private async Task<ulong> DoGenomeEvaluation(List<NeatGenome<T>> offspringList)
     {
         // TODO: Review this. We don't necessarily want to re-evaluate genomes even if the evaluation scheme is non-deterministic.
 
@@ -252,13 +252,13 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
         // is non-deterministic, then we must re-evaluate all genomes in the population, both old and new genome.
         if(_evaluator.IsDeterministic)
         {
-            _evaluator.Evaluate(offspringList);
-            evaluationCount = (ulong)offspringList.Count;
+            await _evaluator.Evaluate(offspringList);
+            return (ulong)offspringList.Count;
         }
         else
         {
-            _evaluator.Evaluate(_pop.GenomeList);
-            evaluationCount = (ulong)_pop.GenomeList.Count;
+            await _evaluator.Evaluate(_pop.GenomeList);
+            return (ulong)_pop.GenomeList.Count;
         }
 
         // Note. In future _evaluator may return an evaluation count, as it may apply a strategy that determines

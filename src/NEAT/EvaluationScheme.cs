@@ -22,7 +22,7 @@
         public FitnessInfo NullFitness => FitnessInfo.DefaultFitnessInfo;
 
         /// <inheritdoc/>
-        public bool EvaluatorsHaveState => true;
+        public bool EvaluatorsHaveState => false;
 
         /// <inheritdoc/>
         public IPhenomeEvaluator<IBlackBox<double>> CreateEvaluator()

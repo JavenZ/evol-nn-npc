@@ -44,7 +44,7 @@ public partial class Trainer : Node
         // Update game logic here.
     }
 
-    public void train()
+    public async void train()
     {
         // Experiment ID
         var Id = "Test";
@@ -67,7 +67,7 @@ public partial class Trainer : Node
 
         // Create a NeatEvolutionAlgorithm instance ready to run the experiment
         var ea = NeatUtils.CreateNeatEvolutionAlgorithm(experiment);
-        ea.Initialise();
+        await ea.Initialise();
         GD.Print("Initialized the evolutionary algorithm.");
 
         // Create the initial population
@@ -80,7 +80,7 @@ public partial class Trainer : Node
             GamePool.Initialize(PopulationSize);
 
             // Evaluate generation
-            ea.PerformOneGeneration();
+            await ea.PerformOneGeneration();
             GD.Print($"Gen[{ea.Stats.Generation}] Fit_Best={neatPop.Stats.BestFitness.PrimaryFitness}, Fit_Mean={neatPop.Stats.MeanFitness}, Complexity_Mean={neatPop.Stats.MeanComplexity}, Complexity_Mode={ea.ComplexityRegulationMode}");
 
             if(ea.Population.Stats.BestFitness.PrimaryFitness >= 14.0)

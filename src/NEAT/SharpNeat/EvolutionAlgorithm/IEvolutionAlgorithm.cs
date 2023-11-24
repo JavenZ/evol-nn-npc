@@ -15,10 +15,10 @@ public interface IEvolutionAlgorithm
     /// <summary>
     /// Initialise the evolutionary algorithm.
     /// </summary>
-    void Initialise();
+    Task Initialise();
 
     /// <summary>
     /// Perform one generation of the evolutionary algorithm.
     /// </summary>
-    void PerformOneGeneration();
+    Task PerformOneGeneration();
 }

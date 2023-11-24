@@ -27,22 +27,22 @@ public static class GenomeListEvaluatorFactory
         if(degreeOfParallelism < 1)
             throw new ArgumentException("Must be 1 or above.", nameof(degreeOfParallelism));
 
-        // Create a serial (single threaded) evaluator if degreeOfParallelism is one.
-        if(degreeOfParallelism == 1)
-        {
-            return new SerialGenomeListEvaluator<TGenome, TPhenome>(
-                genomeDecoder,
-                phenomeEvaluationScheme);
-        }
+        // // Create a serial (single threaded) evaluator if degreeOfParallelism is one.
+        // if(degreeOfParallelism == 1)
+        // {
+        //     return new SerialGenomeListEvaluator<TGenome, TPhenome>(
+        //         genomeDecoder,
+        //         phenomeEvaluationScheme);
+        // }
 
         // Create a parallel (multi-threaded) evaluator for degreeOfParallelism > 1.
-        if(phenomeEvaluationScheme.EvaluatorsHaveState)
-        {
-            return new ParallelGenomeListEvaluator<TGenome, TPhenome>(
-                genomeDecoder,
-                phenomeEvaluationScheme,
-                degreeOfParallelism);
-        }
+        // if(phenomeEvaluationScheme.EvaluatorsHaveState)
+        // {
+        //     return new ParallelGenomeListEvaluator<TGenome, TPhenome>(
+        //         genomeDecoder,
+        //         phenomeEvaluationScheme,
+        //         degreeOfParallelism);
+        // }
 
         // else
         return new ParallelGenomeListEvaluatorStateless<TGenome, TPhenome>(

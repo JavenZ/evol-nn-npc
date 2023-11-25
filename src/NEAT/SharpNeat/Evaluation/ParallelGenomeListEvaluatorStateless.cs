@@ -84,6 +84,7 @@ public class ParallelGenomeListEvaluatorStateless<TGenome,TPhenome> : IGenomeLis
     public async Task Evaluate(IList<TGenome> genomeList)
     {
         // Decode and evaluate genomes in parallel.
+        GD.Print($"DEGREES OF PARALLELISM: {_parallelOptions.MaxDegreeOfParallelism}");
         await Parallel.ForEachAsync(
             genomeList,
             _parallelOptions,

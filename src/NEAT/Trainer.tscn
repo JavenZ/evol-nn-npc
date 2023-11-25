@@ -4,6 +4,7 @@
 
 [node name="Trainer" type="Node"]
 script = ExtResource("1_fmw0m")
+PopulationSize = 100
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(5743, 3205)

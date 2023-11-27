@@ -5,20 +5,18 @@ using SharpNeat;
 // [GlobalClass]
 public partial class GamePool
 {
-    private static Godot.Mutex mutex = new Godot.Mutex();
-    private static int game_index = 0;
-    private static Array<Node2D> pool;
-    private static Godot.Collections.Dictionary<Node2D, Array<NNBrainComponent>> BrainPool;
+    private static Godot.Mutex Mutex = new Godot.Mutex();
+    private static List<GameSession> Pool;
 
-    public Trainer trainer {set; get;}
+    public Trainer Trainer {set; get;}
 
-    public void Initialize(int size)
+    public int Size {set; get;}
+
+    public void Initialize()
     {
         // NOT THREAD SAFE
         GD.Print("Initializing game pool...");
-        game_index = 0;
-        pool = new Array<Node2D>();
-        BrainPool = new Godot.Collections.Dictionary<Node2D, Array<NNBrainComponent>>();
+        Pool = new List<GameSession>(Size);
 
         PackedScene game_scene = GD.Load("res://Game/Game.tscn") as PackedScene;
         PackedScene human_scene = GD.Load("res://NPCs/Human_Sword/Human_Sword.tscn") as PackedScene;
@@ -26,69 +24,94 @@ public partial class GamePool
         PackedScene brain_scene = GD.Load("res://Components/BrainComponent/NN/NNBrainComponent.tscn") as PackedScene;
         
         int j = 0;
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < Size; i++)
         {
+            // Instantiate game session
+            var session = new GameSession();
+
             // Instantiate game node
-            var game = game_scene.Instantiate() as Node2D;
-            BrainPool[game] = new Array<NNBrainComponent>();
+            session.Game = game_scene.Instantiate() as Node2D;
+            session.Game.Set("name", $"game_{i}");
             
             // Space out game position
             if (i % 10 == 0) j++;
-            var new_pos = game.GlobalPosition;
+            var new_pos = session.Game.GlobalPosition;
             new_pos.X += 1100 * (i % 10);
             new_pos.Y += 520 * j;
-            game.Position = new_pos;
+            session.Game.Position = new_pos;
 
             // Instantiate game teams
-            var team_a = new Array<Node>();
-            var mush1 = mushroom_scene.Instantiate();
-            var brain1 = brain_scene.Instantiate() as NNBrainComponent;
-            BrainPool[game].Add(brain1);
-            mush1.Set("brain_component", brain1);
-            team_a.Add(mush1);
-            game.Set("team_a", team_a);
+            session.TeamABrain = brain_scene.Instantiate() as NNBrainComponent;
+            var mushroom = mushroom_scene.Instantiate();
+            mushroom.Set("brain_component", session.TeamABrain);
+            session.TeamA.Add(mushroom);
+            session.Game.Set("team_a", session.TeamA);
 
-            var team_b = new Array<Node>();
-            var human1 = human_scene.Instantiate();
-            var brain2 = brain_scene.Instantiate() as NNBrainComponent;
-            BrainPool[game].Add(brain2);
-            human1.Set("brain_component", brain2);
-            team_b.Add(human1);
-            game.Set("team_b", team_b);
+            session.TeamBBrain = brain_scene.Instantiate() as NNBrainComponent;
+            var human = human_scene.Instantiate();
+            human.Set("brain_component", session.TeamBBrain);
+            session.TeamB.Add(human);
+            session.Game.Set("team_b", session.TeamB);
 
-            // Add game to pool
-            pool.Add(game);
+            // Add game session to pool
+            Pool.Add(session);
         }
         GD.Print("Game pool initialized!");
     }
 
-    public async Task<GameResults> StartGame(IBlackBox<double> box)
+    public async Task<GameResults> JoinGame(IBlackBox<double> box, String team)
     {
         // THREAD SAFE
-        GD.Print("Starting game...");
+        GD.Print("Joining game...");
+        GameSession session;
 
-        // Select available game from pool
-        mutex.Lock();
-        var game = pool[game_index];
-        game_index += 1;
-        mutex.Unlock();
-
-        // Update brain component with box
-        foreach (NNBrainComponent brain in BrainPool[game])
+        // Select first available game from pool & update respective brain components with box
+        Mutex.Lock();
+        if (team == "TeamA")
         {
-            brain.Box = box;
+            session = Pool.First(session => !session.TeamAReady);
+            session.TeamABrain.Box = box;
+            session.TeamAReady = true;
+        }
+        else if (team == "TeamB")
+        {
+            session = Pool.First(session => !session.TeamBReady);
+            session.TeamBBrain.Box = box;
+            session.TeamBReady = true;
+        }
+        else
+        {
+            session = Pool.First(session => !session.TeamAReady && !session.TeamBReady);
+            session.TeamABrain.Box = box;
+            session.TeamBBrain.Box = box;
+            session.TeamAReady = true;
+            session.TeamBReady = true;
         }
 
-        // Add game to scene tree
-        trainer.CallDeferred("add_child", game);
+        // Start game session if both teams are ready
+        if (session.TeamAReady && session.TeamBReady)
+            Trainer.CallDeferred("add_child", session.Game);
 
-        // Wait for game to finish
-        var results = await game.ToSignal(game, "finished");
+        Mutex.Unlock();
+
+        // Wait for game session to finish
+        var results = await session.Game.ToSignal(session.Game, "finished");
         GD.Print("Game finished!");
 
         // Return game results
         return results[0].As<GameResults>();
     }
+    private class GameSession {
+        public Node2D Game {set; get;}
 
+        public Array<Node> TeamA = new Array<Node>();
+        public Array<Node> TeamB = new Array<Node>();
+
+        public NNBrainComponent TeamABrain {set; get;}
+        public NNBrainComponent TeamBBrain {set; get;}
+
+        public bool TeamAReady {set; get;}
+        public bool TeamBReady {set; get;}
+    }
 
 }

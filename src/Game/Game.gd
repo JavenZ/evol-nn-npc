@@ -53,16 +53,16 @@ func finish_match():
 		b_damage_received += node.health_component.max_health - node.health_component.health
 	
 	# calculate damage given
-	var a_damage_given = b_damage_received
-	var b_damage_given = a_damage_received
+#	var a_damage_given = b_damage_received
+#	var b_damage_given = a_damage_received
 	
 	# calculate allies defeated
 	var a_ally_deaths = len(self.team_a) - a_size
 	var b_ally_deaths = len(self.team_b) - b_size
 	
 	# calculate enemies defeated
-	var a_enemy_deaths = b_ally_deaths
-	var b_enemy_deaths = a_ally_deaths
+#	var a_enemy_deaths = b_ally_deaths
+#	var b_enemy_deaths = a_ally_deaths
 	
 	# how long was the match?
 	var match_total_time = self.calculate_time_lived()

@@ -30,9 +30,13 @@ public partial class Trainer : Node
     {
         GD.Print($"Trainer Ready()");
 
-        // Initialize game pool
-        GamePool = new GamePool() { trainer=this };
-        GamePool.Initialize(PopulationSize);
+        // Instantiate game pool
+        GamePool = new GamePool()
+        {
+            Trainer=this,
+            Size=PopulationSize,
+        };
+        GamePool.Initialize();
 
         // Start training process
         train();
@@ -77,7 +81,7 @@ public partial class Trainer : Node
         for(int i = 0; i < 0; i++)
         {
             // Initialize game pool
-            GamePool.Initialize(PopulationSize);
+            GamePool.Initialize();
 
             // Evaluate generation
             await ea.PerformOneGeneration();

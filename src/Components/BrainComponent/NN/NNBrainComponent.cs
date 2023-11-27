@@ -54,8 +54,6 @@ public partial class NNBrainComponent : Node
         // Activate the black box
         Box.Activate();
 
-        // GD.Print($"x={outputs[0]}, jump={outputs[1]}, atk={outputs[2]}");
-
         // Read output signals
         decision.x = 0;
         if (outputs[0] >= 0.50)
@@ -70,6 +68,8 @@ public partial class NNBrainComponent : Node
         decision.attack = false;
         if (outputs[2] >= 0.50)
             decision.attack = true;
+        
+        GD.Print($"{state}\n{decision}");
 
         return decision;
     }

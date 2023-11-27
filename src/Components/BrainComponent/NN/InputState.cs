@@ -18,4 +18,9 @@ public partial class InputState : Resource
 
     public float NextYToEnemy {set; get;}
 
+    public override string ToString()
+    {
+        return $"InputState: MyHealth={MyHealth}, EnemyHealth={EnemyHealth}, MyState={MyState}, EnemyState={EnemyState}, DistanceToEnemy={DistanceToEnemy}, NextX={NextXToEnemy}, NextY={NextYToEnemy}";
+    }
+
 }

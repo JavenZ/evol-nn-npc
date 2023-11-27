@@ -7,7 +7,7 @@
         public GamePool GamePool {set; get;}
 
         /// <inheritdoc/>
-        public int InputCount => 2; // +1 for bias!
+        public int InputCount => 7 + 1; // +1 for bias!
 
         /// <inheritdoc/>
         public int OutputCount => 3;

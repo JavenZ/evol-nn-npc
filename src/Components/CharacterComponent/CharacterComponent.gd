@@ -147,6 +147,7 @@ func on_hit():
 		die()
 
 func attack(decision: OutputDecision):
+	if self.attack_component != null and decision.attack == true:
 		self.update_state(States.ATTACK)
 		self.attack_component.start_attack()
 

@@ -57,14 +57,47 @@ func _ready():
 	self.sprite_component.animation_finished.connect(finished_attack)
 
 func _physics_process(delta):
-	if self.brain_component != null:
-		var input_state = InputState.new()
-		input_state.MyHealth = self.health_component.health / self.health_component.max_health
-		
-		var decision = self.brain_component.NextMove(input_state) as OutputDecision;
+	if self.brain_component != null and self.game != null:
+		var input_state = calculate_input_state()
+		var decision = self.brain_component.NextMove(input_state) as OutputDecision
 		move(decision, delta)
-#	else:
-#		move(OutputDecision.new(), delta)
+
+func calculate_input_state():
+	var input_state = InputState.new()
+	
+	# my health
+	input_state.MyHealth = self.health_component.health / self.health_component.max_health
+	
+	# my state 
+	input_state.MyState = self.state
+	
+	# get enemy
+	var enemy = self.game.get_enemy(self)
+	if enemy != null:
+		
+		# enemy state
+		input_state.EnemyState = enemy.state
+		
+		# enemy health
+		input_state.EnemyHealth = enemy.health_component.health / enemy.health_component.max_health
+		
+		# update navigation to enemy
+		var enemy_pos = enemy.global_position
+		self.nav_component.update_target(enemy_pos, 1.0)
+		if !self.nav_component.finished():
+			var my_pos: Vector2 = self.global_position
+			var next_pos: Vector2 = self.nav_component.next()
+			
+			# distance to enemy
+			input_state.DistanceToEnemy = my_pos.distance_to(enemy_pos)
+			
+			# next X to enemy
+			input_state.NextXToEnemy = next_pos.x
+			
+			# next Y to enemy
+			input_state.NextYToEnemy = next_pos.y
+	
+	return input_state
 
 func move(decision: OutputDecision, delta: float) -> void:
 	# block input if character is dead

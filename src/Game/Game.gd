@@ -1,7 +1,7 @@
 extends Node2D
 class_name Game
 
-signal finished(report)
+signal finished(results: GameResults)
 
 @export var map : Map
 @export var team_a : Array
@@ -68,23 +68,17 @@ func finish_match():
 	var match_total_time = self.calculate_time_lived()
 	
 	# create match report
-	var report = {
-		'game': self.name,
-		'winner': winner,
-		'match_time': match_total_time,
-		'a_damage_given': a_damage_given,
-		'b_damage_given': b_damage_given,
-		'a_damage_received': a_damage_received,
-		'b_damage_received': b_damage_received,
-		'a_ally_deaths': a_ally_deaths,
-		'b_ally_deaths': b_ally_deaths,
-		'a_enemy_deaths': a_enemy_deaths,
-		'b_enemy_deaths': b_enemy_deaths,
-	}
+	var results = GameResults.new()
+	results.GameID = self.name
+	results.Winner = winner
+	results.MatchTime = match_total_time
+	results.TeamADmgReceived = a_damage_received
+	results.TeamBDmgReceived = b_damage_received
+	results.TeamADeaths = a_ally_deaths
+	results.TeamBDeaths = b_ally_deaths
 	
 	# emit finished signal
-	# print(report)
-	self.finished.emit(report)
+	self.finished.emit(results)
 
 func on_character_death(character):
 	# remove character from scene tree

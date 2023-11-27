@@ -62,7 +62,7 @@ public partial class GamePool
         GD.Print("Game pool initialized!");
     }
 
-    public async Task<float> StartGame(IBlackBox<double> box)
+    public async Task<GameResults> StartGame(IBlackBox<double> box)
     {
         // THREAD SAFE
         GD.Print("Starting game...");
@@ -86,8 +86,8 @@ public partial class GamePool
         var results = await game.ToSignal(game, "finished");
         GD.Print("Game finished!");
 
-        // TODO Return game results
-        return 0.0F;
+        // Return game results
+        return results[0].As<GameResults>();
     }
 
 

@@ -10,7 +10,9 @@
         public async Task<FitnessInfo> Evaluate(IBlackBox<double> box)
         {
             // double fitness = await GamePool.StartGame();
-            double fitness = await GamePool.StartGame(box);
+            var results = await GamePool.StartGame(box);
+            GD.Print(results);
+            double fitness = 0.0;
 
             // bool success = true;
 

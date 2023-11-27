@@ -63,6 +63,7 @@ func _physics_process(delta):
 	if self.brain_component != null and self.game != null:
 		var input_state = calculate_input_state()
 		var decision = self.brain_component.NextMove(input_state) as OutputDecision
+		# print(decision)
 		move(decision, delta)
 
 func calculate_input_state():

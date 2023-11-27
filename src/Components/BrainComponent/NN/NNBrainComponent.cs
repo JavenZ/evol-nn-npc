@@ -69,7 +69,7 @@ public partial class NNBrainComponent : Node
         if (outputs[2] >= 0.50)
             decision.attack = true;
         
-        GD.Print($"{state}\n{decision}");
+        // GD.Print($"{state}\n{decision}");
 
         return decision;
     }

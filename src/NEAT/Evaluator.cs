@@ -7,9 +7,11 @@
     {
         public GamePool GamePool {set; get;}
 
+        public String Team {set; get;}
+
         public async Task<FitnessInfo> Evaluate(IBlackBox<double> box)
         {
-            var results = await GamePool.JoinGame(box, "");
+            var results = await GamePool.JoinGame(box, Team);
             GD.Print(results);
             double fitness = 0.0;
 

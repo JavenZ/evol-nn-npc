@@ -6,6 +6,8 @@
     {
         public GamePool GamePool {set; get;}
 
+        public String Team {set; get;}
+
         /// <inheritdoc/>
         public int InputCount => 7 + 1; // +1 for bias!
 
@@ -30,6 +32,7 @@
             return new Evaluator()
             {
                 GamePool=GamePool,
+                Team=Team,
             };
         }
 

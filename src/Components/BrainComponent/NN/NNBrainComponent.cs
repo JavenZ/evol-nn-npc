@@ -44,6 +44,12 @@ public partial class NNBrainComponent : Node
 
         // Read input state
         inputs[1] = state.MyHealth;
+        inputs[2] = state.EnemyHealth;
+        inputs[3] = state.MyState;
+        inputs[4] = state.EnemyState;
+        inputs[5] = state.DistanceToEnemy;
+        inputs[6] = state.NextXToEnemy;
+        inputs[7] = state.NextYToEnemy;
 
         // Activate the black box
         Box.Activate();

@@ -33,7 +33,7 @@ public partial class GamePool
             BrainPool[game] = new Array<NNBrainComponent>();
             
             // Space out game position
-            if (i % (int)(size / 10) == 0) j++;
+            if (i % 10 == 0) j++;
             var new_pos = game.GlobalPosition;
             new_pos.X += 1100 * (i % 10);
             new_pos.Y += 520 * j;

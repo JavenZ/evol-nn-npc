@@ -1,33 +1,27 @@
-[gd_scene load_steps=13 format=3 uid="uid://dj5s3wellnxki"]
+[gd_scene load_steps=11 format=3 uid="uid://dj5s3wellnxki"]
 
 [ext_resource type="Script" path="res://Components/CharacterComponent/CharacterComponent.gd" id="1_4uhdj"]
 [ext_resource type="PackedScene" uid="uid://npmqb1xw41mh" path="res://Components/CollisionComponent/CollisionComponent.tscn" id="2_vg7yb"]
 [ext_resource type="Shape2D" uid="uid://b8qwa1jtef47o" path="res://NPCs/Mushroom/CollisionShape.tres" id="3_hnhur"]
-[ext_resource type="PackedScene" uid="uid://chp3gw8xnv336" path="res://Components/DetectionComponent/DetectionComponent.tscn" id="4_uwdjd"]
 [ext_resource type="PackedScene" uid="uid://ccahkekd4fg8i" path="res://Components/HealthBarComponent/HealthBarComponent.tscn" id="5_oii3v"]
 [ext_resource type="PackedScene" uid="uid://b7wydua5u4l3w" path="res://Components/NavigationComponent/NavigationComponent.tscn" id="6_wg077"]
 [ext_resource type="PackedScene" uid="uid://dw4x6yvynbewu" path="res://Components/SpriteComponent/SpriteComponent.tscn" id="7_ewp1q"]
 [ext_resource type="SpriteFrames" uid="uid://b5lvckvcsikd4" path="res://NPCs/Mushroom/SpriteFrames.tres" id="8_a2gtm"]
-[ext_resource type="PackedScene" uid="uid://ewr87m8f2mdf" path="res://Components/BrainComponent/Mob/MobBrainComponent.tscn" id="9_wffvp"]
 [ext_resource type="PackedScene" uid="uid://bojr524aeduio" path="res://Components/HealthComponent/HealthComponent.tscn" id="10_br0pv"]
 [ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/HitBoxComponent.tscn" id="11_wf1g5"]
 [ext_resource type="PackedScene" uid="uid://lxc4svn70xhb" path="res://Components/AttackComponent/AttackComponent.tscn" id="12_2b1hs"]
 
-[node name="Mushroom" type="CharacterBody2D" node_paths=PackedStringArray("collision_component", "sprite_component", "brain_component", "health_component", "attack_component")]
+[node name="Mushroom" type="CharacterBody2D" node_paths=PackedStringArray("collision_component", "sprite_component", "nav_component", "health_component", "attack_component")]
 collision_layer = 2
 script = ExtResource("1_4uhdj")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
-brain_component = NodePath("MobBrainComponent")
+nav_component = NodePath("NavigationComponent")
 health_component = NodePath("HealthComponent")
 attack_component = NodePath("AttackComponent")
 
 [node name="CollisionComponent" parent="." instance=ExtResource("2_vg7yb")]
 shape = ExtResource("3_hnhur")
-
-[node name="DetectionComponent" parent="." instance=ExtResource("4_uwdjd")]
-collision_layer = 0
-collision_mask = 4
 
 [node name="HealthBarComponent" parent="." node_paths=PackedStringArray("collision_component") instance=ExtResource("5_oii3v")]
 collision_component = NodePath("../CollisionComponent")
@@ -46,11 +40,6 @@ sprite_frames = ExtResource("8_a2gtm")
 animation = &"walk"
 current_direction = -1
 spawn_direction = -1
-
-[node name="MobBrainComponent" parent="." node_paths=PackedStringArray("nav_component", "detection_component", "character_component") instance=ExtResource("9_wffvp")]
-nav_component = NodePath("../NavigationComponent")
-detection_component = NodePath("../DetectionComponent")
-character_component = NodePath("..")
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component", "character_component") instance=ExtResource("10_br0pv")]
 healthbar_component = NodePath("../HealthBarComponent")

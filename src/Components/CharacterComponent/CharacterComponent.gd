@@ -90,15 +90,16 @@ func calculate_input_state():
 		if !self.nav_component.finished():
 			var my_pos: Vector2 = self.global_position
 			var next_pos: Vector2 = self.nav_component.next()
+			var next_diff: Vector2 = next_pos - my_pos
 			
 			# distance to enemy
 			input_state.DistanceToEnemy = my_pos.distance_to(enemy_pos)
 			
 			# next X to enemy
-			input_state.NextXToEnemy = next_pos.x
+			input_state.NextXToEnemy = next_diff.x
 			
 			# next Y to enemy
-			input_state.NextYToEnemy = next_pos.y
+			input_state.NextYToEnemy = next_diff.y
 	
 	return input_state
 

@@ -5,8 +5,10 @@ class_name CharacterComponent
 @export var collision_component : CollisionComponent
 @export var sprite_component : SpriteComponent
 @export var brain_component: NNBrainComponent
+@export var nav_component: NavigationComponent
 @export var health_component : HealthComponent
 @export var attack_component : AttackComponent
+@export var game : Game
 
 # MOVEMENT VARS ---------------- #
 @export var max_speed: float = 560
@@ -28,6 +30,7 @@ var jump_buffer_timer : float = 0
 # An enum allows us to keep track of valid states.
 enum States {IDLE, WALK, JUMP, ATTACK, DEAD}
 @export var state : States = States.IDLE
+@export_enum("TeamA", "TeamB") var team
 
 # signals
 signal death(character)

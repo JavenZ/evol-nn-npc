@@ -13,16 +13,24 @@ signal finished(report)
 
 func _ready():
 	for node in self.team_a:
-		self.map.spawn_character(node)
+		node.game = self
+		self.map.spawn_character(node, "TeamA")
 		node.add_to_group(a_name)
 		node.connect("death", on_character_death)
 	for node in self.team_b:
-		self.map.spawn_character(node)
+		node.game = self
+		self.map.spawn_character(node, "TeamB")
 		node.add_to_group(b_name)
 		node.connect("death", on_character_death)
 	
 	# start match timer
 	$MatchTimer.start(self.match_time)
+
+func get_enemy(char: CharacterComponent) -> CharacterComponent:
+	if char.team == "TeamA":
+		return get_tree().get_first_node_in_group(b_name) as CharacterComponent
+	else:
+		return get_tree().get_first_node_in_group(a_name) as CharacterComponent
 
 func finish_match():
 	# print("Match finished!")

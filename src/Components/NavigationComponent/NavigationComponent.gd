@@ -21,3 +21,4 @@ func next() -> Vector2:
 
 func _on_cooldown_timer_timeout():
 	self.freeze = false
+

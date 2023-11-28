@@ -4,9 +4,11 @@ class_name CharacterComponent
 # NODE REFERENCES
 @export var collision_component : CollisionComponent
 @export var sprite_component : SpriteComponent
-@export var brain_component: MobBrainComponent
+@export var brain_component: NNBrainComponent
+@export var nav_component: NavigationComponent
 @export var health_component : HealthComponent
 @export var attack_component : AttackComponent
+@export var game : Game
 
 # MOVEMENT VARS ---------------- #
 @export var max_speed: float = 560
@@ -28,6 +30,7 @@ var jump_buffer_timer : float = 0
 # An enum allows us to keep track of valid states.
 enum States {IDLE, WALK, JUMP, ATTACK, DEAD}
 @export var state : States = States.IDLE
+@export_enum("TeamA", "TeamB") var team
 
 # signals
 signal death(character)
@@ -57,23 +60,64 @@ func _ready():
 	self.sprite_component.animation_finished.connect(finished_attack)
 
 func _physics_process(delta):
-	var input = self.brain_component.next_move()
-	move(input, delta)
+	if self.brain_component != null and self.game != null:
+		var input_state = calculate_input_state()
+		var decision = self.brain_component.NextMove(input_state) as OutputDecision
+		# print(decision)
+		move(decision, delta)
 
-func move(input: Dictionary, delta: float) -> void:
+func calculate_input_state():
+	var input_state = InputState.new()
+	
+	# my health
+	input_state.MyHealth = self.health_component.health / self.health_component.max_health
+	
+	# my state 
+	input_state.MyState = self.state
+	
+	# get enemy
+	var enemy = self.game.get_enemy(self)
+	if enemy != null:
+		
+		# enemy state
+		input_state.EnemyState = enemy.state
+		
+		# enemy health
+		input_state.EnemyHealth = enemy.health_component.health / enemy.health_component.max_health
+		
+		# update navigation to enemy
+		var enemy_pos = enemy.global_position
+		self.nav_component.update_target(enemy_pos, 1.0)
+		if !self.nav_component.finished():
+			var my_pos: Vector2 = self.global_position
+			var next_pos: Vector2 = self.nav_component.next()
+			var next_diff: Vector2 = next_pos - my_pos
+			
+			# distance to enemy
+			input_state.DistanceToEnemy = my_pos.distance_to(enemy_pos)
+			
+			# next X to enemy
+			input_state.NextXToEnemy = next_diff.x
+			
+			# next Y to enemy
+			input_state.NextYToEnemy = next_diff.y
+	
+	return input_state
+
+func move(decision: OutputDecision, delta: float) -> void:
 	# block input if character is dead
 	if self.state != States.DEAD:
 		
 		if self.state == States.IDLE:
 			# attack
-			attack(input)
+			attack(decision)
 			
 		if self.state != States.ATTACK:
 			# vertical movement
-			jump(input, delta)
+			jump(decision, delta)
 			
 			# horizontal movement
-			walk(input, delta)
+			walk(decision, delta)
 			
 			# idle movement
 			idle()
@@ -102,8 +146,8 @@ func on_hit():
 	if self.health_component.health <= 0.0:
 		die()
 
-func attack(input: Dictionary):
-	if self.attack_component != null and input['attack'] == true:
+func attack(decision: OutputDecision):
+	if self.attack_component != null and decision.attack == true:
 		self.update_state(States.ATTACK)
 		self.attack_component.start_attack()
 
@@ -112,9 +156,9 @@ func idle():
 	if is_on_floor() and self.velocity.x == 0:
 		self.update_state(States.IDLE)
 
-func walk(input: Dictionary, delta: float):
+func walk(decision: OutputDecision, delta: float):
 	# x input
-	var x_dir = input["x"]
+	var x_dir = decision.x
 
 	# decelerate if we're not doing movement inputs
 	if x_dir == 0: 
@@ -138,12 +182,12 @@ func walk(input: Dictionary, delta: float):
 	if is_on_floor() and self.velocity.x != 0:
 		self.update_state(States.WALK)
 
-func jump(input: Dictionary, _delta: float) -> void:
+func jump(decision: OutputDecision, _delta: float) -> void:
 	# Reset our jump requirements
 	if is_on_floor():
 		jump_coyote_timer = jump_coyote
 		# is_jumping = false
-	if input["jump"]:
+	if decision.jump:
 		jump_buffer_timer = jump_buffer
 	
 	# Jump if grounded, there is jump input, and we aren't jumping already

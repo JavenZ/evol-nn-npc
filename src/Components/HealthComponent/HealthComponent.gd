@@ -28,7 +28,7 @@ func damage(amount: float) -> void:
 	
 	# apply damage?
 	if not self.invincible and amount > 0.0:
-		print(self.name, " taking damage: ", amount)
+		# print(self.name, " taking damage: ", amount)
 		# subtract health
 		self.health = maxf(0.0, self.health - amount)
 		

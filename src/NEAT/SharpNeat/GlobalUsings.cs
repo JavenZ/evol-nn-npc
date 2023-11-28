@@ -1,0 +1,15 @@
+﻿global using Redzen;
+global using Redzen.Collections;
+global using Redzen.Random;
+global using Redzen.Structures;
+global using SharpNeat.Evaluation;
+global using SharpNeat.EvolutionAlgorithm;
+global using SharpNeat.Graphs;
+global using SharpNeat.Neat.Genome;
+global using SharpNeat.Neat.Speciation;
+global using System;
+global using System.Collections.Generic;
+global using System.IO;
+global using System.Threading;
+global using System.Threading.Tasks;   
+global using System.Linq;

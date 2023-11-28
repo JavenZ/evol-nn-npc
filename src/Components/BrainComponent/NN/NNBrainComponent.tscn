@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ls3x8kpfptlf"]
+
+[ext_resource type="Script" path="res://Components/BrainComponent/NN/NNBrainComponent.cs" id="1_l7gr5"]
+
+[node name="NNBrainComponent" type="Node"]
+script = ExtResource("1_l7gr5")

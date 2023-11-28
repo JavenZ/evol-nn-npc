@@ -23,7 +23,7 @@ func calculate_damage(attack: AttackComponent) -> float:
 	return attack.damage
 
 func _on_hit_box_body_entered(body):
-	print(name, ": body entered hitbox (", body.name, ")")
+	# print(name, ": body entered hitbox (", body.name, ")")
 	if body is AttackComponent:
 		self.inside_attacks.append(body as AttackComponent)
 

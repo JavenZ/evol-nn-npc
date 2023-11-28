@@ -11,7 +11,6 @@ func _ready():
 
 func _on_detection_area_body_entered(_body):
 	# uses collision layer to detect
-	print("player detected!")
 	self.body_detected = _body
 
 func _on_detection_area_body_exited(_body):

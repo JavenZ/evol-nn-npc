@@ -14,6 +14,7 @@ using Godot.Bridge;
 using Godot.NativeInterop;
 using Microsoft.VisualBasic;
 using System.Collections;
+using SharpNeat.Neat.Genome.IO;
 
 #pragma warning disable
 
@@ -59,13 +60,14 @@ public partial class Trainer : Node
             {
                 // Initialize algorithm
                 var ea = await InitializeAlgorithm(team);
-                
+                SavePopulation(ea);
+
                 // Add to list of initialized algorithms
                 mutex.Lock();
                 algorithms.Add(ea);
                 mutex.Unlock();
             });
-        
+                
         // Run each algorithm for each generation
         for (int i = 0; i < Generations; i++)
         {
@@ -79,6 +81,7 @@ public partial class Trainer : Node
                 async (ea, ct) =>
                 {
                     await RunAlgorithm(ea);
+                    SavePopulation(ea);
                 });
         }
 
@@ -89,8 +92,24 @@ public partial class Trainer : Node
     private async Task<NeatEvolutionAlgorithm<Double>> InitializeAlgorithm(String team)
     {
         GD.Print($"Initializing the EA for {team}...");
+        
+        // TODO create better system for team-NPCType mapping
+        String NPCType = "";
+        if (team == "TeamA")
+            NPCType = "Mushroom";
+        else if (team == "TeamB")
+            NPCType = "HumanSword";
+        
+        // Batch ID
+        var BatchID = 0;
+        var SaveFolder = $"./NEAT/Saves/{NPCType}";
+        if (Directory.Exists(SaveFolder))
+        {
+            BatchID += Directory.GetDirectories(SaveFolder).Length;
+        }
+
         // Experiment ID
-        var Id = team;
+        var Id = $"{NPCType}_{BatchID}";
 
         // Create the evaluation scheme
         var evalScheme = new EvaluationScheme()
@@ -111,6 +130,9 @@ public partial class Trainer : Node
 
         // Create a NeatEvolutionAlgorithm instance ready to run the experiment
         var ea = NeatUtils.CreateNeatEvolutionAlgorithm(experiment);
+        ea.BatchID = BatchID;
+        ea.NPCType = NPCType;
+
         await ea.Initialise();
         GD.Print($"Initialized the EA for {team}!");
 
@@ -124,6 +146,22 @@ public partial class Trainer : Node
         var neatPop = ea.Population;
         GD.Print($"Gen[{ea.Stats.Generation}] Fit_Best={neatPop.Stats.BestFitness.PrimaryFitness}, Fit_Mean={neatPop.Stats.MeanFitness}, Complexity_Mean={neatPop.Stats.MeanComplexity}, Size={neatPop.TargetSize}, Complexity_Mode={ea.ComplexityRegulationMode}");         
         return neatPop;
+    }
+
+    private void SavePopulation(NeatEvolutionAlgorithm<Double> ea)
+    {
+        try
+        {
+            var folderName = $"{ea.NPCType}/Batch_{ea.BatchID}/Gen_{ea.Stats.Generation}";
+            // ea.Population.BestGenome
+            NeatPopulationSaver.SaveToFolder(
+                ea.Population.GenomeList,
+                "./NEAT/Saves/",
+                folderName
+            );
+        } catch (IOException e) {
+            GD.Print(e);
+        }
     }
     
 }

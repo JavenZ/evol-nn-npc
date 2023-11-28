@@ -6,7 +6,7 @@
 [node name="Game" type="Node2D" node_paths=PackedStringArray("map")]
 script = ExtResource("1_7fvmt")
 map = NodePath("map")
-match_time = 10.0
+match_time = 30.0
 
 [node name="MatchTimer" type="Timer" parent="."]
 one_shot = true

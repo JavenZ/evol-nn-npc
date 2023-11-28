@@ -1,20 +1,10 @@
 using Godot;
-using Godot.Collections;
 using SharpNeat.Experiments;
-using SharpNeat.Experiments.ConfigModels;
-using SharpNeat.IO;
 using SharpNeat.NeuralNets;
-using SharpNeat.Evaluation;
-using SharpNeat.EvolutionAlgorithm;
 ﻿using SharpNeat.Neat.EvolutionAlgorithm;
 using SharpNeat.Neat;
-using SharpNeat;
-using System.Diagnostics;
-using Godot.Bridge;
-using Godot.NativeInterop;
-using Microsoft.VisualBasic;
-using System.Collections;
 using SharpNeat.Neat.Genome.IO;
+using SharpNeat.Neat.Reproduction.Asexual.WeightMutation;
 
 #pragma warning disable
 
@@ -154,11 +144,16 @@ public partial class Trainer : Node
                     var populationLoader = new NeatPopulationLoader<Double>(metaNeatGenome);
                     var lastGenomeList = populationLoader.LoadFromFolder(lastGenPath);
 
+                    // Create an instance of the default connection weight mutation scheme.
+                    var weightMutationScheme = WeightMutationSchemeFactory.CreateDefaultScheme(experiment.ConnectionWeightScale);
+
                     // Create Population
                     var lastPopulation = NeatPopulationFactory<double>.CreatePopulation(
                         metaNeatGenome,
-                        connectionsProportion: experiment.InitialInterconnectionsProportion,
-                        popSize: experiment.PopulationSize
+                        seedGenomes: lastGenomeList,
+                        popSize: experiment.PopulationSize,
+                        reproductionAsexualSettings: experiment.ReproductionAsexualSettings,
+                        weightMutationScheme: weightMutationScheme 
                     );
 
                     // Recreate new algorithm

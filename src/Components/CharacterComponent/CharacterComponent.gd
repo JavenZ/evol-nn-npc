@@ -137,7 +137,7 @@ func finished_attack():
 		self.update_state(States.IDLE)
 
 func die():
-	print(name + " died!")
+	# print(name + " died!")
 	self.update_state(States.DEAD)
 	self.death.emit(self)
 

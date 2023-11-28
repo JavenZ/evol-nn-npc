@@ -70,10 +70,12 @@ public partial class Trainer : Node
                 algorithms.Add(ea);
                 mutex.Unlock();
             });
+        GD.Print("Initialized algorithms.\n");
                 
         // Run each algorithm for each generation
         for (int i = 0; i < Generations; i++)
         {
+            GD.Print($"Starting Gen[{i+1}]...");
             // Reset shared game pool
             GamePool.Reset();
 
@@ -86,16 +88,15 @@ public partial class Trainer : Node
                     await RunAlgorithm(ea);
                     SavePopulation(ea);
                 });
+            GD.Print($"Finished Gen[{i+1}].\n");
         }
 
         // Finished!
-        GD.Print("Training finished!");
+        GD.Print("\nTraining finished!");
     }
 
     private async Task<NeatEvolutionAlgorithm<Double>> InitializeAlgorithm(String team)
-    {
-        GD.Print($"Initializing the EA for {team}...");
-        
+    {        
         // TODO create better system for team-NPCType mapping
         String NPCType = "";
         if (team == "TeamA")
@@ -112,7 +113,8 @@ public partial class Trainer : Node
         }
 
         // Experiment ID
-        var Id = $"{NPCType}_{BatchID}";
+        var Id = $"{NPCType}_Batch{BatchID}";
+        GD.Print($"Initializing the EA for {Id}...");
 
         // Create the evaluation scheme
         var evalScheme = new EvaluationScheme()
@@ -175,7 +177,7 @@ public partial class Trainer : Node
 
         // Initialize the algorithm and run 0th generation
         await ea.Initialise();
-        GD.Print($"Initialized the EA for {team}!");
+        GD.Print($"Initialized the EA for {Id}!");
 
         return ea;
     }
@@ -185,7 +187,7 @@ public partial class Trainer : Node
         // Evaluate generation
         await ea.PerformOneGeneration();
         var neatPop = ea.Population;
-        GD.Print($"Gen[{ea.Stats.Generation}] Fit_Best={neatPop.Stats.BestFitness.PrimaryFitness}, Fit_Mean={neatPop.Stats.MeanFitness}, Complexity_Mean={neatPop.Stats.MeanComplexity}, Size={neatPop.TargetSize}, Complexity_Mode={ea.ComplexityRegulationMode}");         
+        GD.Print($"({ea.NPCType}) Gen[{ea.Stats.Generation}] Fit_Best={neatPop.Stats.BestFitness.PrimaryFitness}, Fit_Mean={neatPop.Stats.MeanFitness}, Complexity_Mean={neatPop.Stats.MeanComplexity}, Complexity_Mode={ea.ComplexityRegulationMode}");         
         return neatPop;
     }
 

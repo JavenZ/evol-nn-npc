@@ -15,7 +15,7 @@ public partial class GamePool
     public void Initialize()
     {
         // NOT THREAD SAFE
-        GD.Print("Initializing game pool...");
+        // GD.Print("Initializing game pool...");
         Pool = new List<GameSession>(Size);
 
         PackedScene game_scene = GD.Load("res://Game/Game.tscn") as PackedScene;
@@ -57,7 +57,7 @@ public partial class GamePool
             // Add game session to pool
             Pool.Add(session);
         }
-        GD.Print("Game pool initialized!");
+        // GD.Print("Game pool initialized!");
     }
 
     public void Reset()
@@ -88,14 +88,14 @@ public partial class GamePool
             session = Pool.First(session => !session.TeamAReady);
             session.TeamABrain.Box = box;
             session.TeamAReady = true;
-            GD.Print($"TeamA joined session {session.ID}");
+            // GD.Print($"TeamA joined session {session.ID}");
         }
         else if (team == "TeamB")
         {
             session = Pool.First(session => !session.TeamBReady);
             session.TeamBBrain.Box = box;
             session.TeamBReady = true;
-            GD.Print($"TeamB joined session {session.ID}");
+            // GD.Print($"TeamB joined session {session.ID}");
         }
         else
         {
@@ -104,21 +104,21 @@ public partial class GamePool
             session.TeamBBrain.Box = box;
             session.TeamAReady = true;
             session.TeamBReady = true;
-            GD.Print($"TeamA & TeamB joined session {session.ID}");
+            // GD.Print($"TeamA & TeamB joined session {session.ID}");
         }
 
         // Start game session if both teams are ready
         if (session.TeamAReady && session.TeamBReady)
         {
             Trainer.CallDeferred("add_child", session.Game);
-            GD.Print($"Started session {session.ID}!");
+            // GD.Print($"Started session {session.ID}!");
         }
 
         Mutex.Unlock();
 
         // Wait for game session to finish
         var results = await session.Game.ToSignal(session.Game, "finished");
-        GD.Print($"Session {session.ID} finished!");
+        // GD.Print($"Session {session.ID} finished!");
 
         // Return game results
         return results[0].As<GameResults>();

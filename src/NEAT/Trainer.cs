@@ -27,6 +27,9 @@ public partial class Trainer : Node
     [Export]
     public int Generations = 10;
 
+    [Export]
+    public bool LoadLatestBatch = true;
+
     public static GamePool GamePool;
 
     public override void _Ready()
@@ -130,9 +133,47 @@ public partial class Trainer : Node
 
         // Create a NeatEvolutionAlgorithm instance ready to run the experiment
         var ea = NeatUtils.CreateNeatEvolutionAlgorithm(experiment);
+
+        // Load latest batch population?
+        if (LoadLatestBatch)
+        {
+            var lastBatchPath = $"{SaveFolder}/Batch_{BatchID - 1}";
+            if (Directory.Exists(lastBatchPath))
+            {
+                try {
+                    // Calculate last generation path
+                    var lastGen = Directory.GetDirectories(lastBatchPath).Length - 1;
+                    var lastGenPath = $"{lastBatchPath}/Gen_{lastGen}";
+
+                    // Create a MetaNeatGenome.
+                    var metaNeatGenome = NeatUtils.CreateMetaNeatGenome(experiment);
+
+                    // Load latest genome list
+                    var populationLoader = new NeatPopulationLoader<Double>(metaNeatGenome);
+                    var lastGenomeList = populationLoader.LoadFromFolder(lastGenPath);
+
+                    // Create Population
+                    var lastPopulation = NeatPopulationFactory<double>.CreatePopulation(
+                        metaNeatGenome,
+                        connectionsProportion: experiment.InitialInterconnectionsProportion,
+                        popSize: experiment.PopulationSize
+                    );
+
+                    // Recreate new algorithm
+                    ea = NeatUtils.CreateNeatEvolutionAlgorithm(experiment, lastPopulation);
+
+                    GD.Print($"Loaded existing population from {lastGenPath}.");
+                } catch (IOException e) {
+                    GD.Print(e);
+                }
+            }
+        }
+
+        // Update algorithm meta data
         ea.BatchID = BatchID;
         ea.NPCType = NPCType;
 
+        // Initialize the algorithm and run 0th generation
         await ea.Initialise();
         GD.Print($"Initialized the EA for {team}!");
 

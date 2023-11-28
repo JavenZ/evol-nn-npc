@@ -1,6 +1,7 @@
 ﻿// This file is part of SharpNEAT; Copyright Colin D. Green.
 // See LICENSE.txt for details.
 using System.Numerics;
+using Godot;
 using Redzen.Numerics;
 using Redzen.Numerics.Distributions;
 using SharpNeat.Neat.Reproduction.Asexual;
@@ -21,6 +22,8 @@ internal sealed class OffspringBuilder<T>
     readonly NeatReproductionSexual<T> _reproductionSexual;
     readonly double _interspeciesMatingProportion;
     readonly IComparer<FitnessInfo> _fitnessComparer;
+
+    public int StaticPopulationSize {set; get;}
 
     #region Constructor
 
@@ -115,7 +118,9 @@ internal sealed class OffspringBuilder<T>
         asexualCount = sexualCount = interspeciesCount = 0;
 
         // Calc total number of offspring to produce for the population as a whole.
-        int offspringCount = speciesArr.Sum(x => x.Stats.OffspringCount);
+        // int offspringCount = speciesArr.Sum(x => x.Stats.OffspringCount);
+        int offspringCount = StaticPopulationSize;
+        // GD.Print($"OFFSPRING TO PRODUCE: {offspringCount}");
 
         // Create an empty list to add the offspring to (with preallocated storage).
         var offspringList = new List<NeatGenome<T>>(offspringCount);

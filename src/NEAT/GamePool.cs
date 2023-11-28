@@ -78,7 +78,7 @@ public partial class GamePool
     public async Task<GameResults> JoinGame(IBlackBox<double> box, String team)
     {
         // THREAD SAFE
-        // GD.Print("Joining game...");
+        // GD.Print($"{team} joining game...");
         GameSession session;
 
         // Select first available game from pool & update respective brain components with box

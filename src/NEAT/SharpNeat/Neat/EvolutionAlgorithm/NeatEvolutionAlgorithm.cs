@@ -130,6 +130,8 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
         get => _complexityRegulationStrategy.CurrentMode;
     }
 
+    public int StaticPopulationSize {set; get;}
+
     #endregion
 
     #region Public Methods
@@ -139,6 +141,9 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
     /// </summary>
     public async Task Initialise()
     {
+        // Set static population size.
+        _offspringBuilder.StaticPopulationSize = StaticPopulationSize;
+
         // Evaluate each genome in the new population.
         await _evaluator.Evaluate(_pop.GenomeList);
 
@@ -168,17 +173,22 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
             out int offspringSexualCount,
             out int offspringInterspeciesCount);
 
+        // GD.Print($"SIZE AFTER CREATE_OFFSPRING: {offspringList.Count}");
+
         // Trim population back to elite genomes only.
         // Note. Returns a flag that indicates if there is at least one empty species following trimming.
         TrimSpeciesBackToElite(out bool emptySpeciesFlag);
+        // GD.Print($"SIZE AFTER ELITE TRIM: {_pop.GenomeList.Count}");
 
         // Rebuild _pop.GenomeList. It will now contain just the elite genomes from each species.
         RebuildGenomeList();
+        // GD.Print($"SIZE AFTER REBUILD: {_pop.GenomeList.Count}");
 
         // Append offspring genomes to the elite genomes in _pop.GenomeList. We do this before calling the
         // _genomeListEvaluator.Evaluate() because some evaluation schemes re-evaluate the elite genomes
         // (otherwise we could just evaluate offspringList).
         _pop.GenomeList.AddRange(offspringList);
+        // GD.Print($"SIZE AFTER ADDRANGE: {_pop.GenomeList.Count}, {offspringList.Count}");
 
         // Genome evaluation.
         ulong evaluationCount = await DoGenomeEvaluation(offspringList);

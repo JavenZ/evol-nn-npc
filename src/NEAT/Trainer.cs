@@ -32,7 +32,7 @@ public partial class Trainer : Node
     {
         GD.Print($"Trainer Ready()");
 
-        // Instantiate game pool
+        // Instantiate shared game pool
         GamePool = new GamePool()
         {
             Trainer=this,
@@ -49,45 +49,41 @@ public partial class Trainer : Node
         List<NeatEvolutionAlgorithm<Double>> algorithms = new List<NeatEvolutionAlgorithm<Double>>(2);
         Godot.Mutex mutex = new Godot.Mutex();
         string[] teams = {"TeamA", "TeamB"};
+        ParallelOptions parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 2 };
 
-        // Initialize algorithm for each team
+        // Initialize algorithms concurrently for each team
         await Parallel.ForEachAsync(
             teams,
-            new ParallelOptions { MaxDegreeOfParallelism = 2 },
+            parallelOptions,
             async (team, ct) =>
             {
+                // Initialize algorithm
                 var ea = await InitializeAlgorithm(team);
                 
+                // Add to list of initialized algorithms
                 mutex.Lock();
                 algorithms.Add(ea);
                 mutex.Unlock();
             });
         
-        foreach (var ea in algorithms)
+        // Run each algorithm for each generation
+        for (int i = 0; i < Generations; i++)
         {
-            var neatPop = ea.Population;
-            GD.Print(neatPop.Stats);
+            // Reset shared game pool
+            GamePool.Reset();
+
+            // Run concurrently for each team
+            await Parallel.ForEachAsync(
+                algorithms,
+                parallelOptions,
+                async (ea, ct) =>
+                {
+                    await RunAlgorithm(ea);
+                });
         }
-        GD.Print(algorithms.Count);
 
-        // // Create the initial population
-        // var neatPop = ea.Population;
-        // GD.Print(neatPop.Stats);
-
-        // for(int i = 0; i < 0; i++)
-        // {
-        //     // Initialize game pool
-        //     GamePool.Initialize();
-
-        //     // Evaluate generation
-        //     await ea.PerformOneGeneration();
-        //     GD.Print($"Gen[{ea.Stats.Generation}] Fit_Best={neatPop.Stats.BestFitness.PrimaryFitness}, Fit_Mean={neatPop.Stats.MeanFitness}, Complexity_Mean={neatPop.Stats.MeanComplexity}, Complexity_Mode={ea.ComplexityRegulationMode}");
-
-        //     // if(ea.Population.Stats.BestFitness.PrimaryFitness >= 14.0)
-        //     // {
-        //     //     break;
-        //     // }
-        // }
+        // Finished!
+        GD.Print("Training finished!");
     }
 
     private async Task<NeatEvolutionAlgorithm<Double>> InitializeAlgorithm(String team)
@@ -121,10 +117,14 @@ public partial class Trainer : Node
         return ea;
     }
 
-    // private async Task<Population> RunAlgorithm(NeatEvolutionAlgorithm<Double> ea)
-    // {
-
-    // }
+    private async Task<NeatPopulation<Double>> RunAlgorithm(NeatEvolutionAlgorithm<Double> ea)
+    {
+        // Evaluate generation
+        await ea.PerformOneGeneration();
+        var neatPop = ea.Population;
+        GD.Print($"Gen[{ea.Stats.Generation}] Fit_Best={neatPop.Stats.BestFitness.PrimaryFitness}, Fit_Mean={neatPop.Stats.MeanFitness}, Complexity_Mean={neatPop.Stats.MeanComplexity}, Size={neatPop.TargetSize}, Complexity_Mode={ea.ComplexityRegulationMode}");         
+        return neatPop;
+    }
     
 }
 

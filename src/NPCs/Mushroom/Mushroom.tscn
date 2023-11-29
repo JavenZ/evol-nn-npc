@@ -55,7 +55,7 @@ health_component = NodePath("../HealthComponent")
 [node name="AttackComponent" parent="." node_paths=PackedStringArray("shape") instance=ExtResource("12_2b1hs")]
 collision_layer = 64
 shape = NodePath("CollisionShape2D")
-damage = 5.0
+damage = 7.5
 start_disabled = false
 attack_cooldown = 0.0
 

@@ -9,11 +9,11 @@ public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
 
     public String Team {set; get;}
 
-    const double WIN_REWARD = 10.0;
+    const double WIN_REWARD = 5.0;
     const double TIME_REWARD = 8.0;
-    const double HEALTH_REWARD = 7.5;
+    const double HEALTH_REWARD = 10.0;
     const double DMG_REWARD = 7.5;
-    const double KILL_REWARD = 5.0;
+    const double KILL_REWARD = 0.0;
 
     public async Task<FitnessInfo> Evaluate(IBlackBox<double> box)
     {

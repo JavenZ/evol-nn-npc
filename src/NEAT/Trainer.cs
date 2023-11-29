@@ -5,6 +5,8 @@ using SharpNeat.NeuralNets;
 using SharpNeat.Neat;
 using SharpNeat.Neat.Genome.IO;
 using SharpNeat.Neat.Reproduction.Asexual.WeightMutation;
+using System.IO;
+using System.Text;
 
 #pragma warning disable
 
@@ -81,10 +83,11 @@ public partial class Trainer : Node2D
             GD.Print(e);
         }
         
-        // Save populations
+        // Save populations & results
         foreach (var ea in algorithms)
         {
             SavePopulation(ea);
+            WriteGenerationResults(ea);
         }
         GD.Print("Initialized algorithms.\n");
                 
@@ -93,7 +96,6 @@ public partial class Trainer : Node2D
         {
             GD.Print($"Starting Gen[{i+1}]...");
             // Reset shared game pool
-            // GamePool.Reset();
             GamePool.Initialize();
 
             // Run concurrently for each team
@@ -111,10 +113,11 @@ public partial class Trainer : Node2D
                 GD.Print(e);
             }
             
-            // Save populations
+            // Save populations & results
             foreach (var ea in algorithms)
             {
                 SavePopulation(ea);
+                WriteGenerationResults(ea);
             }
             GD.Print($"Finished Gen[{i+1}].\n");
         }
@@ -198,7 +201,7 @@ public partial class Trainer : Node2D
                     // Recreate new algorithm
                     ea = NeatUtils.CreateNeatEvolutionAlgorithm(experiment, lastPopulation);
 
-                    GD.Print($"Loaded existing population from {lastGenPath}.");
+                    GD.Print($"Loaded existing population from {lastGenPath}");
                 } catch (IOException e) {
                     GD.Print(e);
                 }
@@ -226,6 +229,41 @@ public partial class Trainer : Node2D
         return neatPop;
     }
 
+    private void WriteGenerationResults(NeatEvolutionAlgorithm<Double> ea)
+    {
+        const String fileName = "./NEAT/Saves/training_results.csv";
+        const String separator = ",";
+        StringBuilder output = new StringBuilder();
+        var neatPop = ea.Population;
+        try
+        {
+            // Build headings line if file doesn't exist
+            if (!File.Exists(fileName))
+            {
+                String[] headings = {"Batch", "Gen", "NPC", "Fit_Best", "Fit_Mean", "Complexity_Mean"};
+                output.AppendLine(string.Join(separator, headings));
+            }
+
+            // Build data line
+            String[] data = {
+                ea.BatchID.ToString(),
+                ea.Stats.Generation.ToString(),
+                ea.NPCType,
+                neatPop.Stats.BestFitness.PrimaryFitness.ToString(),
+                neatPop.Stats.MeanFitness.ToString(),
+                neatPop.Stats.MeanComplexity.ToString()
+            };
+            output.AppendLine(string.Join(separator, data));
+
+            // Append output to file
+            File.AppendAllText(fileName, output.ToString());
+            GD.Print($"Wrote generation results for {ea.NPCType}.");
+        } catch (Exception e)
+        {
+            GD.Print(e);
+        }
+    }
+
     private void SavePopulation(NeatEvolutionAlgorithm<Double> ea)
     {
         try
@@ -238,7 +276,7 @@ public partial class Trainer : Node2D
                 "./NEAT/Saves/",
                 folderName
             );
-            GD.Print($"Saved population for {ea.NPCType}");
+            GD.Print($"Saved population for {ea.NPCType}.");
         } catch (Exception e) {
             GD.Print(e);
         }

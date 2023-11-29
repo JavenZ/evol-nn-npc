@@ -10,6 +10,7 @@ public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
     public String Team {set; get;}
 
     const double WIN_REWARD = 5.0;
+    const double TIE_REWARD = -5.0;
     const double TIME_REWARD = 8.0;
     const double HEALTH_REWARD = 10.0;
     const double DMG_REWARD = 7.5;
@@ -27,6 +28,10 @@ public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
         if (results.Winner == Team) {
             fitness += WIN_REWARD;
         }
+        else if (results.Winner == "Tie")
+        {
+            fitness += TIE_REWARD;
+        }
 
         if (Team == "TeamA") {
             fitness += (1.0 - results.TeamADmgReceived) * HEALTH_REWARD;
@@ -38,6 +43,9 @@ public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
             fitness += results.TeamADmgReceived * DMG_REWARD;
             fitness += results.TeamADeaths * KILL_REWARD;
         }
+
+        // negative fitness check
+        if (fitness < 0.0) fitness = 0.0;
 
         GD.Print(results + $", {Team}_Fit={fitness}");
 

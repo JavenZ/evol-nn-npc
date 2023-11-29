@@ -85,7 +85,7 @@ public class ParallelGenomeListEvaluatorStateless<TGenome,TPhenome> : IGenomeLis
     {
         // Decode and evaluate genomes in parallel.
         // GD.Print($"DEGREES OF PARALLELISM: {_parallelOptions.MaxDegreeOfParallelism}");
-        GD.Print($"About to evaluate genome list of size {genomeList.Count}");
+        // GD.Print($"About to evaluate genome list of size {genomeList.Count}");
         await Parallel.ForEachAsync(
             genomeList,
             _parallelOptions,
@@ -102,8 +102,7 @@ public class ParallelGenomeListEvaluatorStateless<TGenome,TPhenome> : IGenomeLis
                     // GD.Print("Fitness evaluated!");
                 }
             });
-        GD.Print("FINISHED EVALUATING GENOME LIST");
-
+        // GD.Print("FINISHED EVALUATING GENOME LIST");
     }
 
     /// <summary>

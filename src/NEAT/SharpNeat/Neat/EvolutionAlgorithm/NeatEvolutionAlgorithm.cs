@@ -132,6 +132,10 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
 
     public int StaticPopulationSize {set; get;}
 
+    public String NPCType {set; get;}
+
+    public int BatchID {set; get;}
+
     #endregion
 
     #region Public Methods

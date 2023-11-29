@@ -9,7 +9,7 @@ using SharpNeat.Neat.Reproduction.Asexual.WeightMutation;
 #pragma warning disable
 
 [GlobalClass]
-public partial class Trainer : Node
+public partial class Trainer : Node2D
 {
     // Member variables here, example:
     [Export]
@@ -20,11 +20,20 @@ public partial class Trainer : Node
     [Export]
     public bool LoadLatestBatch = true;
 
+    [Export]
+    public bool ShowDisplay = true;
+
     public static GamePool GamePool;
 
     public override void _Ready()
     {
         GD.Print($"Trainer Ready()");
+
+        // Hide display?
+        if (!ShowDisplay)
+        {
+            this.Visible = false;
+        }
 
         // Instantiate shared game pool
         GamePool = new GamePool()

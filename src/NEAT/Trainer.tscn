@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://NEAT/Trainer.cs" id="1_fmw0m"]
 
-[node name="Trainer" type="Node"]
+[node name="Trainer" type="Node2D"]
 script = ExtResource("1_fmw0m")
 PopulationSize = 50
+ShowDisplay = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(5743, 3205)

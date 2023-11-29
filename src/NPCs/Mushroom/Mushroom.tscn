@@ -44,6 +44,7 @@ spawn_direction = -1
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component", "character_component") instance=ExtResource("10_br0pv")]
 healthbar_component = NodePath("../HealthBarComponent")
 character_component = NodePath("..")
+damage_cooldown = 1.0
 
 [node name="HitBoxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("11_wf1g5")]
 collision_layer = 8

@@ -52,6 +52,7 @@ health_component = NodePath("../HealthComponent")
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component", "character_component") instance=ExtResource("5_ww5d7")]
 healthbar_component = NodePath("../HealthBarComponent")
 character_component = NodePath("..")
+damage_cooldown = 1.0
 
 [node name="AttackComponent" parent="." node_paths=PackedStringArray("shape") instance=ExtResource("9_nrqrq")]
 collision_layer = 32

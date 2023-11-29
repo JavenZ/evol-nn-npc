@@ -44,7 +44,12 @@ public partial class Trainer : Node2D
         GamePool.Initialize();
 
         // Start training process
-        train();
+        try {
+            train();
+        } catch (Exception e)
+        {
+            GD.Print(e);
+        }
     }
 
     private async void train()
@@ -62,13 +67,16 @@ public partial class Trainer : Node2D
             {
                 // Initialize algorithm
                 var ea = await InitializeAlgorithm(team);
-                SavePopulation(ea);
 
                 // Add to list of initialized algorithms
                 mutex.Lock();
                 algorithms.Add(ea);
                 mutex.Unlock();
             });
+        foreach (var ea in algorithms)
+        {
+            SavePopulation(ea);
+        }
         GD.Print("Initialized algorithms.\n");
                 
         // Run each algorithm for each generation
@@ -85,8 +93,12 @@ public partial class Trainer : Node2D
                 async (ea, ct) =>
                 {
                     await RunAlgorithm(ea);
-                    SavePopulation(ea);
                 });
+            
+            foreach (var ea in algorithms)
+            {
+                SavePopulation(ea);
+            }
             GD.Print($"Finished Gen[{i+1}].\n");
         }
 
@@ -207,7 +219,8 @@ public partial class Trainer : Node2D
                 "./NEAT/Saves/",
                 folderName
             );
-        } catch (IOException e) {
+            GD.Print($"Saved population for {ea.NPCType}");
+        } catch (Exception e) {
             GD.Print(e);
         }
     }

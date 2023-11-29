@@ -6,6 +6,7 @@
 script = ExtResource("1_fmw0m")
 PopulationSize = 100
 Generations = 500
+ShowDisplay = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(5743, 3205)

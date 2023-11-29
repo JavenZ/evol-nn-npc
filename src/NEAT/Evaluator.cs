@@ -12,7 +12,6 @@ public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
     public async Task<FitnessInfo> Evaluate(IBlackBox<double> box)
     {
         var results = await GamePool.JoinGame(box, Team);
-        GD.Print(results);
         double fitness = 0.0;
 
         // Rewarding for desired game time and when humans win
@@ -38,6 +37,8 @@ public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
             fitness += Math.Max(results.TeamADmgReceived - results.TeamBDmgReceived, 0.0);
             fitness += Math.Max(results.TeamADeaths - results.TeamBDeaths, 0.0);
         }
+
+        GD.Print(results + $", {Team}_Fit={fitness}");
 
         return new FitnessInfo(fitness);
     }

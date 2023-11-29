@@ -118,7 +118,7 @@ public partial class GamePool
 
         // Wait for game session to finish
         var results = await session.Game.ToSignal(session.Game, "finished");
-        GD.Print($"Session {session.ID} finished!");
+        // GD.Print($"Session {session.ID} finished!");
 
         // Return game results
         return results[0].As<GameResults>();

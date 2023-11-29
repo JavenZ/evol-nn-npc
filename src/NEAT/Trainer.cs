@@ -178,6 +178,7 @@ public partial class Trainer : Node2D
         // Update algorithm meta data
         ea.BatchID = BatchID;
         ea.NPCType = NPCType;
+        ea.StaticPopulationSize = PopulationSize;
 
         // Initialize the algorithm and run 0th generation
         await ea.Initialise();

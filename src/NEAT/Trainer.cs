@@ -142,6 +142,7 @@ public partial class Trainer : Node2D
             IsAcyclic = true,
             ActivationFnName = ActivationFunctionId.LeakyReLU.ToString(),
             PopulationSize = PopulationSize,
+            DegreeOfParallelism = PopulationSize,
         };
         // GD.Print("Initialized experiment.");
 

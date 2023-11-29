@@ -117,7 +117,7 @@ public partial class GamePool
         Mutex.Unlock();
 
         // Wait for game session to finish
-        var results = await session.Game.ToSignal(session.Game, "finished");
+        var results = await Trainer.ToSignal(session.Game, "finished");
         // GD.Print($"Session {session.ID} finished!");
 
         // Return game results

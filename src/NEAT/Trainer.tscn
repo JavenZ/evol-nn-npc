@@ -4,8 +4,8 @@
 
 [node name="Trainer" type="Node2D"]
 script = ExtResource("1_fmw0m")
-PopulationSize = 50
-ShowDisplay = false
+PopulationSize = 100
+Generations = 500
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(5743, 3205)

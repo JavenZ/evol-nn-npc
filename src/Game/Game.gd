@@ -46,32 +46,26 @@ func finish_match():
 	# calculate damage received
 	var a_damage_received = 0.0
 	for node in self.team_a:
-		a_damage_received += node.health_component.max_health - node.health_component.health
+		a_damage_received += node.health_component.health / node.health_component.max_health
+	a_damage_received = 1.0 - (a_damage_received / len(self.team_a))
 	
 	var b_damage_received = 0.0
 	for node in self.team_b:
-		b_damage_received += node.health_component.max_health - node.health_component.health
-	
-	# calculate damage given
-#	var a_damage_given = b_damage_received
-#	var b_damage_given = a_damage_received
+		b_damage_received += node.health_component.health / node.health_component.max_health
+	b_damage_received = 1.0 - (b_damage_received / len(self.team_b))
 	
 	# calculate allies defeated
 	var a_ally_deaths = len(self.team_a) - a_size
 	var b_ally_deaths = len(self.team_b) - b_size
 	
-	# calculate enemies defeated
-#	var a_enemy_deaths = b_ally_deaths
-#	var b_enemy_deaths = a_ally_deaths
-	
 	# how long was the match?
-	var match_total_time = self.calculate_time_lived()
+	var match_length = self.calculate_time_lived() / self.match_time
 	
 	# create match report
 	var results = GameResults.new()
 	results.GameID = self.name
 	results.Winner = winner
-	results.MatchTime = match_total_time
+	results.MatchTime = match_length
 	results.TeamADmgReceived = a_damage_received
 	results.TeamBDmgReceived = b_damage_received
 	results.TeamADeaths = a_ally_deaths

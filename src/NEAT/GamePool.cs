@@ -57,7 +57,7 @@ public partial class GamePool
             // Add game session to pool
             Pool.Add(session);
         }
-        // GD.Print("Game pool initialized!");
+        GD.Print("Game pool initialized.");
     }
 
     // public void Reset()

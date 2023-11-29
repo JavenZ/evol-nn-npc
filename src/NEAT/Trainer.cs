@@ -25,6 +25,8 @@ public partial class Trainer : Node2D
 
     public static GamePool GamePool;
 
+    private static Godot.Mutex mutex = new Godot.Mutex();
+
     public override void _Ready()
     {
         GD.Print($"Trainer Ready()");
@@ -55,24 +57,31 @@ public partial class Trainer : Node2D
     private async void train()
     {
         List<NeatEvolutionAlgorithm<Double>> algorithms = new List<NeatEvolutionAlgorithm<Double>>(2);
-        Godot.Mutex mutex = new Godot.Mutex();
         string[] teams = {"TeamA", "TeamB"};
         ParallelOptions parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 2 };
 
         // Initialize algorithms concurrently for each team
-        await Parallel.ForEachAsync(
-            teams,
-            parallelOptions,
-            async (team, ct) =>
-            {
-                // Initialize algorithm
-                var ea = await InitializeAlgorithm(team);
+        try 
+        {
+            await Parallel.ForEachAsync(
+                teams,
+                parallelOptions,
+                async (team, ct) =>
+                {
+                    // Initialize algorithm
+                    var ea = await InitializeAlgorithm(team);
 
-                // Add to list of initialized algorithms
-                mutex.Lock();
-                algorithms.Add(ea);
-                mutex.Unlock();
-            });
+                    // Add to list of initialized algorithms
+                    mutex.Lock();
+                    algorithms.Add(ea);
+                    mutex.Unlock();
+                });
+        } catch (Exception e)
+        {
+            GD.Print(e);
+        }
+        
+        // Save populations
         foreach (var ea in algorithms)
         {
             SavePopulation(ea);
@@ -88,14 +97,21 @@ public partial class Trainer : Node2D
             GamePool.Initialize();
 
             // Run concurrently for each team
-            await Parallel.ForEachAsync(
-                algorithms,
-                parallelOptions,
-                async (ea, ct) =>
-                {
-                    await RunAlgorithm(ea);
-                });
+            try 
+            {
+                await Parallel.ForEachAsync(
+                    algorithms,
+                    parallelOptions,
+                    async (ea, ct) =>
+                    {
+                        await RunAlgorithm(ea);
+                    });
+            } catch (Exception e)
+            {
+                GD.Print(e);
+            }
             
+            // Save populations
             foreach (var ea in algorithms)
             {
                 SavePopulation(ea);
@@ -214,6 +230,7 @@ public partial class Trainer : Node2D
     {
         try
         {
+            GD.Print($"Attempting to save population for {ea.NPCType}");
             var folderName = $"{ea.NPCType}/Batch_{ea.BatchID}/Gen_{ea.Stats.Generation}";
             // ea.Population.BestGenome
             NeatPopulationSaver.SaveToFolder(

@@ -60,20 +60,20 @@ public partial class GamePool
         // GD.Print("Game pool initialized!");
     }
 
-    public void Reset()
-    {
-        // NOT THREAD SAFE
-        GD.Print("Resetting game pool...");
+    // public void Reset()
+    // {
+    //     // NOT THREAD SAFE
+    //     GD.Print("Resetting game pool...");
 
-        // Remove all games from scene tree
-        foreach (GameSession session in Pool)
-        {
-            Trainer.RemoveChild(session.Game);
-        }
+    //     // Remove all games from scene tree
+    //     foreach (GameSession session in Pool)
+    //     {
+    //         Trainer.RemoveChild(session.Game);
+    //     }
 
-        // Re-initialize game pool
-        Initialize();
-    }
+    //     // Re-initialize game pool
+    //     Initialize();
+    // }
 
     public async Task<GameResults> JoinGame(IBlackBox<double> box, String team)
     {

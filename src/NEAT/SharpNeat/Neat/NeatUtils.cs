@@ -145,8 +145,8 @@ public static class NeatUtils
                 neatExperiment.EnableHardwareAcceleratedNeuralNets);
 
         // Resolve degreeOfParallelism (-1 is allowed in config, but must be resolved here to an actual degree).
-        // int degreeOfParallelismResolved = ResolveDegreeOfParallelism(neatExperiment);
-        int degreeOfParallelismResolved = neatExperiment.PopulationSize;
+        int degreeOfParallelismResolved = ResolveDegreeOfParallelism(neatExperiment);
+        // int degreeOfParallelismResolved = neatExperiment.PopulationSize;
 
         // Create a genomeList evaluator, and return.
         var genomeListEvaluator = GenomeListEvaluatorFactory.CreateEvaluator(

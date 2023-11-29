@@ -84,7 +84,8 @@ public partial class Trainer : Node2D
         {
             GD.Print($"Starting Gen[{i+1}]...");
             // Reset shared game pool
-            GamePool.Reset();
+            // GamePool.Reset();
+            GamePool.Initialize();
 
             // Run concurrently for each team
             await Parallel.ForEachAsync(

@@ -73,6 +73,10 @@ func finish_match():
 	
 	# emit finished signal
 	self.finished.emit(results)
+	
+	# destroy
+	queue_free()
+	# self.get_parent().call_deferred("free", self)
 
 func on_character_death(character):
 	# remove character from scene tree

@@ -15,14 +15,14 @@ public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
         double fitness = 0.0;
 
         // Game time reward
-        fitness += (1.0 - results.MatchTime) * 10.0;
+        fitness += (1.0 - results.MatchTime) * 8.0;
         
         if (results.Winner == "Tie") {
             fitness += 5.0;
         }
         // Winner is current team
         else if (results.Winner == Team) {
-            fitness += 15.0;
+            fitness += 10.0;
         }
         // Winner is other team
         else {
@@ -30,11 +30,11 @@ public sealed class Evaluator : IPhenomeEvaluator<IBlackBox<double>>
         }
 
         if (Team == "TeamA") {
-            fitness += Math.Max(results.TeamBDmgReceived - (results.TeamADmgReceived * 0.8), 0.0) * 10.0;
+            fitness += Math.Max(results.TeamBDmgReceived - (results.TeamADmgReceived * 1.2), 0.0) * 15.0;
             fitness += Math.Max(results.TeamBDeaths - results.TeamADeaths, 0.0) * 5.0;
         }
         else {
-            fitness += Math.Max(results.TeamADmgReceived - (results.TeamBDmgReceived * 0.8), 0.0) * 10.0;
+            fitness += Math.Max(results.TeamADmgReceived - (results.TeamBDmgReceived * 1.2), 0.0) * 15.0;
             fitness += Math.Max(results.TeamADeaths - results.TeamBDeaths, 0.0) * 5.0;
         }
 

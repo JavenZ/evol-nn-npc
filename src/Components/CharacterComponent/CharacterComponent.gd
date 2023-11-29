@@ -87,8 +87,8 @@ func calculate_input_state():
 		
 		# update navigation to enemy
 		var enemy_pos = enemy.global_position
-		self.nav_component.update_target(enemy_pos, 1.0)
-		if !self.nav_component.finished():
+		var nav_ready = self.nav_component.update_target(enemy_pos)
+		if  nav_ready and !self.nav_component.finished():
 			var my_pos: Vector2 = self.global_position
 			var next_pos: Vector2 = self.nav_component.next()
 			var next_diff: Vector2 = next_pos - my_pos

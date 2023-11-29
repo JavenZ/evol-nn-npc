@@ -148,8 +148,8 @@ func on_hit():
 
 func attack(decision: OutputDecision):
 	if self.attack_component != null and decision.attack == true:
-		self.update_state(States.ATTACK)
-		self.attack_component.start_attack()
+		if self.attack_component.start_attack():
+			self.update_state(States.ATTACK)
 
 func idle():
 	# update state to idle if not moving or falling

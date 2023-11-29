@@ -3,7 +3,7 @@ class_name Game
 
 signal finished(results: GameResults)
 
-@export var map : Map
+@export var map : Map 
 @export var team_a : Array
 @export var team_b : Array
 @export var match_time : float = 60.0

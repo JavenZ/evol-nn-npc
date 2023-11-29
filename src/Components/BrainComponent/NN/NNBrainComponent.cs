@@ -50,6 +50,10 @@ public partial class NNBrainComponent : Node
         inputs[5] = state.DistanceToEnemy;
         inputs[6] = state.NextXToEnemy;
         inputs[7] = state.NextYToEnemy;
+        inputs[8] = Convert.ToDouble(state.MyAttackCooldown);
+        inputs[9] = Convert.ToDouble(state.EnemyAttackCooldown);
+        inputs[10] = Convert.ToDouble(state.MyDamageCooldown);
+        inputs[11] = Convert.ToDouble(state.EnemyDamageCooldown);
 
         // Activate the black box
         Box.Activate();

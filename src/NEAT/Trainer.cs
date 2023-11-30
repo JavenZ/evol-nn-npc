@@ -160,6 +160,10 @@ public partial class Trainer : Node2D
             Team=team,
         };
         // GD.Print("Initialized evaluation scheme.");
+
+        // Determine max concurrent games to evaluate at once
+        var degreeOfParallelism = -1;
+        if (!LimitThreads) degreeOfParallelism = PopulationSize;
         
         // Create a NeatExperiment object with the evaluation scheme
         var experiment = new NeatExperiment<double>(evalScheme, Id)
@@ -167,7 +171,7 @@ public partial class Trainer : Node2D
             IsAcyclic = true,
             ActivationFnName = ActivationFunctionId.LeakyReLU.ToString(),
             PopulationSize = PopulationSize,
-            DegreeOfParallelism = PopulationSize,
+            DegreeOfParallelism = degreeOfParallelism,
         };
         // GD.Print("Initialized experiment.");
 

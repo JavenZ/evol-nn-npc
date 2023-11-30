@@ -25,6 +25,12 @@ public partial class Trainer : Node2D
     [Export]
     public bool ShowDisplay = true;
 
+    [Export]
+    public bool SaveData = true;
+
+    [Export]
+    public bool LimitThreads = false;
+
     public static GamePool GamePool;
 
     private static Godot.Mutex mutex = new Godot.Mutex();
@@ -231,6 +237,7 @@ public partial class Trainer : Node2D
 
     private void WriteGenerationResults(NeatEvolutionAlgorithm<Double> ea)
     {
+        if (!SaveData) return;
         const String fileName = "./NEAT/Saves/training_results.csv";
         const String separator = ",";
         StringBuilder output = new StringBuilder();
@@ -266,6 +273,7 @@ public partial class Trainer : Node2D
 
     private void SavePopulation(NeatEvolutionAlgorithm<Double> ea)
     {
+        if (!SaveData) return;
         try
         {
             GD.Print($"Attempting to save population for {ea.NPCType}");

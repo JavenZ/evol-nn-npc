@@ -20,6 +20,8 @@ sprite_component = NodePath("SpriteComponent")
 nav_component = NodePath("NavigationComponent")
 health_component = NodePath("HealthComponent")
 attack_component = NodePath("AttackComponent")
+max_speed = 750.0
+jump_force = 850.0
 
 [node name="SpriteComponent" parent="." instance=ExtResource("8_s73xr")]
 scale = Vector2(1.5, 1.5)
@@ -52,11 +54,12 @@ health_component = NodePath("../HealthComponent")
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component", "character_component") instance=ExtResource("5_ww5d7")]
 healthbar_component = NodePath("../HealthBarComponent")
 character_component = NodePath("..")
+damage_cooldown = 1.0
 
 [node name="AttackComponent" parent="." node_paths=PackedStringArray("shape") instance=ExtResource("9_nrqrq")]
 collision_layer = 32
 shape = NodePath("CollisionShape2D")
-damage = 25.0
+damage = 12.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponent"]
 position = Vector2(-36, 10)

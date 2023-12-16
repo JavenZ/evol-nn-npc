@@ -9,7 +9,7 @@
         public String Team {set; get;}
 
         /// <inheritdoc/>
-        public int InputCount => 7 + 1; // +1 for bias!
+        public int InputCount => 11 + 1; // +1 for bias!
 
         /// <inheritdoc/>
         public int OutputCount => 3;

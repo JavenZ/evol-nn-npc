@@ -57,23 +57,23 @@ public partial class GamePool
             // Add game session to pool
             Pool.Add(session);
         }
-        // GD.Print("Game pool initialized!");
+        GD.Print("Game pool initialized.");
     }
 
-    public void Reset()
-    {
-        // NOT THREAD SAFE
-        GD.Print("Resetting game pool...");
+    // public void Reset()
+    // {
+    //     // NOT THREAD SAFE
+    //     GD.Print("Resetting game pool...");
 
-        // Remove all games from scene tree
-        foreach (GameSession session in Pool)
-        {
-            Trainer.RemoveChild(session.Game);
-        }
+    //     // Remove all games from scene tree
+    //     foreach (GameSession session in Pool)
+    //     {
+    //         Trainer.RemoveChild(session.Game);
+    //     }
 
-        // Re-initialize game pool
-        Initialize();
-    }
+    //     // Re-initialize game pool
+    //     Initialize();
+    // }
 
     public async Task<GameResults> JoinGame(IBlackBox<double> box, String team)
     {
@@ -117,8 +117,8 @@ public partial class GamePool
         Mutex.Unlock();
 
         // Wait for game session to finish
-        var results = await session.Game.ToSignal(session.Game, "finished");
-        GD.Print($"Session {session.ID} finished!");
+        var results = await Trainer.ToSignal(session.Game, "finished");
+        // GD.Print($"Session {session.ID} finished!");
 
         // Return game results
         return results[0].As<GameResults>();

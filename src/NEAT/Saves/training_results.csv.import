@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://d17wmqhprnt3d"
+
+[deps]
+
+files=["res://NEAT/Saves/training_results.Gen.translation", "res://NEAT/Saves/training_results.NPC.translation", "res://NEAT/Saves/training_results.Fit.translation", "res://NEAT/Saves/training_results.Fit.translation", "res://NEAT/Saves/training_results.Complexity.translation"]
+
+source_file="res://NEAT/Saves/training_results.csv"
+dest_files=["res://NEAT/Saves/training_results.Gen.translation", "res://NEAT/Saves/training_results.NPC.translation", "res://NEAT/Saves/training_results.Fit.translation", "res://NEAT/Saves/training_results.Fit.translation", "res://NEAT/Saves/training_results.Complexity.translation"]
+
+[params]
+
+compress=true
+delimiter=0

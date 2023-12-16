@@ -1,0 +1,18 @@
+# Input and output node counts.
+8	3
+
+# Cyclic/acyclic indicator.
+acyclic
+
+# Connections (source target weight).
+0	11	0.5641076776331719
+3	8	-0.28844253479406057
+4	19	-1.8556938755954016
+6	8	2.756270421325561
+7	8	-4.772130350028511
+11	8	-2.0393926659860777
+19	9	-2.961050784689101
+
+# Activation functions (functionId functionCode).
+0	LeakyReLU
+

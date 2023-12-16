@@ -11,14 +11,14 @@
 [ext_resource type="PackedScene" uid="uid://by4f1iohgvmfd" path="res://Components/HitBoxComponent/HitBoxComponent.tscn" id="11_wf1g5"]
 [ext_resource type="PackedScene" uid="uid://lxc4svn70xhb" path="res://Components/AttackComponent/AttackComponent.tscn" id="12_2b1hs"]
 
-[node name="Mushroom" type="CharacterBody2D" node_paths=PackedStringArray("collision_component", "sprite_component", "nav_component", "health_component", "attack_component")]
+[node name="Mushroom" type="CharacterBody2D" node_paths=PackedStringArray("collision_component", "sprite_component", "nav_component", "health_component")]
 collision_layer = 2
 script = ExtResource("1_4uhdj")
 collision_component = NodePath("CollisionComponent")
 sprite_component = NodePath("SpriteComponent")
 nav_component = NodePath("NavigationComponent")
 health_component = NodePath("HealthComponent")
-attack_component = NodePath("AttackComponent")
+max_speed = 450.0
 
 [node name="CollisionComponent" parent="." instance=ExtResource("2_vg7yb")]
 shape = ExtResource("3_hnhur")
@@ -44,6 +44,7 @@ spawn_direction = -1
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("healthbar_component", "character_component") instance=ExtResource("10_br0pv")]
 healthbar_component = NodePath("../HealthBarComponent")
 character_component = NodePath("..")
+damage_cooldown = 0.5
 
 [node name="HitBoxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("11_wf1g5")]
 collision_layer = 8
@@ -54,8 +55,9 @@ health_component = NodePath("../HealthComponent")
 [node name="AttackComponent" parent="." node_paths=PackedStringArray("shape") instance=ExtResource("12_2b1hs")]
 collision_layer = 64
 shape = NodePath("CollisionShape2D")
-damage = 5.0
+damage = 7.5
 start_disabled = false
+attack_cooldown = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponent"]
 shape = ExtResource("3_hnhur")

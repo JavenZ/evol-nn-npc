@@ -5,11 +5,13 @@ using SharpNeat.NeuralNets;
 using SharpNeat.Neat;
 using SharpNeat.Neat.Genome.IO;
 using SharpNeat.Neat.Reproduction.Asexual.WeightMutation;
+using System.IO;
+using System.Text;
 
 #pragma warning disable
 
 [GlobalClass]
-public partial class Trainer : Node
+public partial class Trainer : Node2D
 {
     // Member variables here, example:
     [Export]
@@ -20,11 +22,28 @@ public partial class Trainer : Node
     [Export]
     public bool LoadLatestBatch = true;
 
+    [Export]
+    public bool ShowDisplay = true;
+
+    [Export]
+    public bool SaveData = true;
+
+    [Export]
+    public bool LimitThreads = false;
+
     public static GamePool GamePool;
+
+    private static Godot.Mutex mutex = new Godot.Mutex();
 
     public override void _Ready()
     {
         GD.Print($"Trainer Ready()");
+
+        // Hide display?
+        if (!ShowDisplay)
+        {
+            this.Visible = false;
+        }
 
         // Instantiate shared game pool
         GamePool = new GamePool()
@@ -35,31 +54,47 @@ public partial class Trainer : Node
         GamePool.Initialize();
 
         // Start training process
-        train();
+        try {
+            train();
+        } catch (Exception e)
+        {
+            GD.Print(e);
+        }
     }
 
     private async void train()
     {
         List<NeatEvolutionAlgorithm<Double>> algorithms = new List<NeatEvolutionAlgorithm<Double>>(2);
-        Godot.Mutex mutex = new Godot.Mutex();
         string[] teams = {"TeamA", "TeamB"};
         ParallelOptions parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 2 };
 
         // Initialize algorithms concurrently for each team
-        await Parallel.ForEachAsync(
-            teams,
-            parallelOptions,
-            async (team, ct) =>
-            {
-                // Initialize algorithm
-                var ea = await InitializeAlgorithm(team);
-                SavePopulation(ea);
+        try 
+        {
+            await Parallel.ForEachAsync(
+                teams,
+                parallelOptions,
+                async (team, ct) =>
+                {
+                    // Initialize algorithm
+                    var ea = await InitializeAlgorithm(team);
 
-                // Add to list of initialized algorithms
-                mutex.Lock();
-                algorithms.Add(ea);
-                mutex.Unlock();
-            });
+                    // Add to list of initialized algorithms
+                    mutex.Lock();
+                    algorithms.Add(ea);
+                    mutex.Unlock();
+                });
+        } catch (Exception e)
+        {
+            GD.Print(e);
+        }
+        
+        // Save populations & results
+        foreach (var ea in algorithms)
+        {
+            SavePopulation(ea);
+            WriteGenerationResults(ea);
+        }
         GD.Print("Initialized algorithms.\n");
                 
         // Run each algorithm for each generation
@@ -67,17 +102,29 @@ public partial class Trainer : Node
         {
             GD.Print($"Starting Gen[{i+1}]...");
             // Reset shared game pool
-            GamePool.Reset();
+            GamePool.Initialize();
 
             // Run concurrently for each team
-            await Parallel.ForEachAsync(
-                algorithms,
-                parallelOptions,
-                async (ea, ct) =>
-                {
-                    await RunAlgorithm(ea);
-                    SavePopulation(ea);
-                });
+            try 
+            {
+                await Parallel.ForEachAsync(
+                    algorithms,
+                    parallelOptions,
+                    async (ea, ct) =>
+                    {
+                        await RunAlgorithm(ea);
+                    });
+            } catch (Exception e)
+            {
+                GD.Print(e);
+            }
+            
+            // Save populations & results
+            foreach (var ea in algorithms)
+            {
+                SavePopulation(ea);
+                WriteGenerationResults(ea);
+            }
             GD.Print($"Finished Gen[{i+1}].\n");
         }
 
@@ -113,6 +160,10 @@ public partial class Trainer : Node
             Team=team,
         };
         // GD.Print("Initialized evaluation scheme.");
+
+        // Determine max concurrent games to evaluate at once
+        var degreeOfParallelism = -1;
+        if (!LimitThreads) degreeOfParallelism = PopulationSize;
         
         // Create a NeatExperiment object with the evaluation scheme
         var experiment = new NeatExperiment<double>(evalScheme, Id)
@@ -120,6 +171,7 @@ public partial class Trainer : Node
             IsAcyclic = true,
             ActivationFnName = ActivationFunctionId.LeakyReLU.ToString(),
             PopulationSize = PopulationSize,
+            DegreeOfParallelism = degreeOfParallelism,
         };
         // GD.Print("Initialized experiment.");
 
@@ -159,7 +211,7 @@ public partial class Trainer : Node
                     // Recreate new algorithm
                     ea = NeatUtils.CreateNeatEvolutionAlgorithm(experiment, lastPopulation);
 
-                    GD.Print($"Loaded existing population from {lastGenPath}.");
+                    GD.Print($"Loaded existing population from {lastGenPath}");
                 } catch (IOException e) {
                     GD.Print(e);
                 }
@@ -169,6 +221,7 @@ public partial class Trainer : Node
         // Update algorithm meta data
         ea.BatchID = BatchID;
         ea.NPCType = NPCType;
+        ea.StaticPopulationSize = PopulationSize;
 
         // Initialize the algorithm and run 0th generation
         await ea.Initialise();
@@ -186,10 +239,48 @@ public partial class Trainer : Node
         return neatPop;
     }
 
-    private void SavePopulation(NeatEvolutionAlgorithm<Double> ea)
+    private void WriteGenerationResults(NeatEvolutionAlgorithm<Double> ea)
     {
+        if (!SaveData) return;
+        const String fileName = "./NEAT/Saves/training_results.csv";
+        const String separator = ",";
+        StringBuilder output = new StringBuilder();
+        var neatPop = ea.Population;
         try
         {
+            // Build headings line if file doesn't exist
+            if (!File.Exists(fileName))
+            {
+                String[] headings = {"Batch", "Gen", "NPC", "Fit_Best", "Fit_Mean", "Complexity_Mean"};
+                output.AppendLine(string.Join(separator, headings));
+            }
+
+            // Build data line
+            String[] data = {
+                ea.BatchID.ToString(),
+                ea.Stats.Generation.ToString(),
+                ea.NPCType,
+                neatPop.Stats.BestFitness.PrimaryFitness.ToString(),
+                neatPop.Stats.MeanFitness.ToString(),
+                neatPop.Stats.MeanComplexity.ToString()
+            };
+            output.AppendLine(string.Join(separator, data));
+
+            // Append output to file
+            File.AppendAllText(fileName, output.ToString());
+            GD.Print($"Wrote generation results for {ea.NPCType}.");
+        } catch (Exception e)
+        {
+            GD.Print(e);
+        }
+    }
+
+    private void SavePopulation(NeatEvolutionAlgorithm<Double> ea)
+    {
+        if (!SaveData) return;
+        try
+        {
+            GD.Print($"Attempting to save population for {ea.NPCType}");
             var folderName = $"{ea.NPCType}/Batch_{ea.BatchID}/Gen_{ea.Stats.Generation}";
             // ea.Population.BestGenome
             NeatPopulationSaver.SaveToFolder(
@@ -197,7 +288,8 @@ public partial class Trainer : Node
                 "./NEAT/Saves/",
                 folderName
             );
-        } catch (IOException e) {
+            GD.Print($"Saved population for {ea.NPCType}.");
+        } catch (Exception e) {
             GD.Print(e);
         }
     }

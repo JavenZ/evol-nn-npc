@@ -75,6 +75,13 @@ func calculate_input_state():
 	# my state 
 	input_state.MyState = self.state
 	
+	# my attack cooldown
+	if self.attack_component != null:
+		input_state.MyAttackCooldown = self.attack_component.cooling_down
+	
+	# my damage cooldown
+	input_state.MyDamageCooldown = self.health_component.invincible
+	
 	# get enemy
 	var enemy = self.game.get_enemy(self)
 	if enemy != null:
@@ -85,10 +92,17 @@ func calculate_input_state():
 		# enemy health
 		input_state.EnemyHealth = enemy.health_component.health / enemy.health_component.max_health
 		
+		# enemy attack cooldown
+		if enemy.attack_component != null:
+			input_state.EnemyAttackCooldown = enemy.attack_component.cooling_down
+		
+		# enemy damage cooldown
+		input_state.EnemyDamageCooldown = enemy.health_component.invincible
+		
 		# update navigation to enemy
 		var enemy_pos = enemy.global_position
-		self.nav_component.update_target(enemy_pos, 1.0)
-		if !self.nav_component.finished():
+		var nav_ready = self.nav_component.update_target(enemy_pos)
+		if  nav_ready and !self.nav_component.finished():
 			var my_pos: Vector2 = self.global_position
 			var next_pos: Vector2 = self.nav_component.next()
 			var next_diff: Vector2 = next_pos - my_pos
@@ -148,8 +162,8 @@ func on_hit():
 
 func attack(decision: OutputDecision):
 	if self.attack_component != null and decision.attack == true:
-		self.update_state(States.ATTACK)
-		self.attack_component.start_attack()
+		if self.attack_component.start_attack():
+			self.update_state(States.ATTACK)
 
 func idle():
 	# update state to idle if not moving or falling

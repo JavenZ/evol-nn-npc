@@ -196,7 +196,7 @@ public class NeatEvolutionAlgorithm<T> : IEvolutionAlgorithm
 
         // Genome evaluation.
         ulong evaluationCount = await DoGenomeEvaluation(offspringList);
-        GD.Print($"Eval count: {evaluationCount}");
+        // GD.Print($"Eval count: {evaluationCount}");
 
         // Integrate offspring into the species.
         IntegrateOffspringIntoSpecies(offspringList, emptySpeciesFlag);
